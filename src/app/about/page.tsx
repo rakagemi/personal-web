@@ -1,13 +1,11 @@
-'use client'
-
 import Maintenance from "@/common/ui/maintenance";
-export default function Home() {
 
+export default function AboutPage() {
   return (
-    <div id="home">
+    <div id="about">
       <main>
         <Maintenance />
       </main>
     </div>
-  );
+    )
 }
