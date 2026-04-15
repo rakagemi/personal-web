@@ -1,12 +1,13 @@
 'use client'
-
-import Maintenance from "@/common/ui/maintenance";
+import Footer from "@/common/ui/footer";
+import HeroSection from "@/common/ui/home/hero";
 export default function Home() {
 
   return (
     <div id="home">
       <main>
-        <Maintenance />
+        <HeroSection />
+        <Footer />
       </main>
     </div>
   );

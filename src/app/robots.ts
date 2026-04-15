@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://pancidiuw.vercel.app/sitemap.xml',
+    sitemap: [`https://pancidiuw.vercel.app/sitemap.xml`],
   }
 }

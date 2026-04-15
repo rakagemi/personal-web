@@ -20,6 +20,7 @@ import { Sun, Moon} from "lucide-react";
 import { NAV_ITEMS } from "@/common/constants/navigation";
 import { LGIcon } from "@/common/ui/icon";
 import { ThemeToggleContainer } from "@/common/ui/mobile-nav-toogle-theme";
+import AnimatedContent from "@/components/animated-content";
 
 type ThemeToggleButtonProps = {
     theme: string | undefined;
@@ -131,7 +132,6 @@ export default function NavigationBar() {
                             </div>
                         </MobileNavMenu>
                     </MobileNav>
-
                 </Navbar>
             </div>
         </div>

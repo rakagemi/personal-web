@@ -5,7 +5,7 @@ export const NAV_ITEMS = [
         link: "/" ,
         icon: House
     },
-    {   name: "About Me",
+    {   name: "Portfolio",
         link: "/about" ,
         icon: Info
     },
