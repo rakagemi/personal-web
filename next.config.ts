@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["pancidiuw.vercel.app"],
+    qualities: [75, 100],
     remotePatterns: [
       {
         protocol: "https",

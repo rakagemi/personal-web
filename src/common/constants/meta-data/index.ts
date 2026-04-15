@@ -1,3 +1,4 @@
+import { ENV } from "@/utils/environment";
 import type { Metadata } from "next";
 
 export const siteMetadata: Metadata = {
@@ -9,18 +10,21 @@ export const siteMetadata: Metadata = {
     applicationName: "Raka Gemi Ibrahim  Portfolio",
     authors: [{ name: "Raka Gemi Ibrahim ", url: "https://github.com/rakagemi" }],
     creator: "Raka Gemi Ibrahim ",
+    icons: {
+        icon: '/favicon.svg',
+    },
     openGraph: {
         type: "website",
         locale: "en_US",
-        url: "https://pancidiuw.vercel.app/",
+        url: `${ENV.url}/sitemap.xml`,
         siteName: "Raka Gemi Ibrahim Portfolio",
         images: [{
-            url: "https://pancidiuw.vercel.app/logo-meta.png",
+            url: `${ENV.url}/logo-meta.png`,
             width: 1200,
             height: 630,
         }],
     },
     verification: {
-        google: "#",
+        google: "qeeJ-bTfzfLMsvhnoCNriCyCpQUWw0Mtb6a-Lo14J0o",
     },
 };

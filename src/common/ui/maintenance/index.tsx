@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "motion/react";
 import { Settings, Wrench, Sparkles } from "lucide-react";
+import Image from "next/image";
 
 export default function Maintenance() {
     return (
@@ -24,8 +25,16 @@ export default function Maintenance() {
                     >
                         <Settings size={120} strokeWidth={1} />
                     </motion.div>
-                    <div className="relative z-10 bg-linear-to-br from-blue-500 to-purple-600 p-4 rounded-2xl shadow-lg shadow-blue-500/20">
-                        <Wrench size={40} className="text-white" />
+                    <div
+                          className="
+                            relative z-10 overflow-hidden rounded-2xl w-18 h-18
+                            bg-white/18 dark:bg-neutral-700/40
+                            shadow-[0_12px_40px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.35)]
+                            dark:shadow-[0_12px_40px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.08)]
+                            backdrop-blur-2xl backdrop-saturate-150"
+                        >
+                        {/* <Wrench size={40} className="text-white" /> */}
+                        <Image src="/assets/image/unnamed.jpg" className="object-cover" width={80} height={80} alt="logo" />
                     </div>
                     <motion.div
                         animate={{ y: [-5, 5, -5], opacity: [0.5, 1, 0.5] }}
@@ -45,7 +54,7 @@ export default function Maintenance() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-white/10 bg-white/5 text-sm font-medium text-neutral-300 backdrop-blur-md"
+                        className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-white/10 bg-white/5 text-sm font-medium text-neutral-500 dark:text-neutral-300 backdrop-blur-md"
                     >
                         <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
                         System Upgrade in Progress
