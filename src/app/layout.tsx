@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import NavigationBar from "@/components/navigation/liquid-navbar";
 import { LayoutAOD } from "@/components/layout-aod";
 import { ENV } from "@/utils/environment";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +26,7 @@ export const metadata = siteMetadata;
 const Head = () => {
   return (
     <head>
+      <link rel="icon" href="favicon.ico" sizes="any" className="rounded-full" />
       <link
         rel="apple-touch-icon"
         href="/assets/favicon/apple-icon?<generated>"
@@ -51,7 +52,8 @@ const Body = ({ children }: { children: React.ReactNode }) => {
         <SmoothScrollProvider>
           <TooltipProvider>
             {children}
-            <GoogleAnalytics gaId={ENV.googleAnalyticsID} />
+            <GoogleTagManager gtmId={ENV.googleTagManagerID || ""} />
+            <GoogleAnalytics gaId={ENV.googleAnalyticsID || ""} />
           </TooltipProvider>
         </SmoothScrollProvider>
         </LayoutAOD>
