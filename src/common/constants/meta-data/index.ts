@@ -1,3 +1,4 @@
+import { ENV } from "@/utils/environment";
 import type { Metadata } from "next";
 
 export const siteMetadata: Metadata = {
@@ -15,10 +16,10 @@ export const siteMetadata: Metadata = {
     openGraph: {
         type: "website",
         locale: "en_US",
-        url: `https://pancidiuw.vercel.app/sitemap.xml`,
+        url: `${ENV.url}`,
         siteName: "Raka Gemi Ibrahim Portfolio",
         images: [{
-            url: `https://pancidiuw.vercel.app/logo-meta.png`,
+            url: `${ENV.url}/logo-meta.png`,
             width: 1200,
             height: 630,
         }],
