@@ -25,6 +25,6 @@ export const siteMetadata: Metadata = {
         }],
     },
     verification: {
-        google: "qeeJ-bTfzfLMsvhnoCNriCyCpQUWw0Mtb6a-Lo14J0o",
+        google: "jqwlfuC07KS7di6uEx61eazbmK2cMHOIXe0mBl8MKR4",
     },
 };
