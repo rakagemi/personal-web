@@ -1,14 +1,17 @@
-'use client'
-import Footer from "@/common/ui/footer";
 import HeroSection from "@/common/ui/home/hero";
-export default function Home() {
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Home - Raka Gemi Ibrahim",
+  description: "Welcome to my portfolio website! I'm Raka Gemi Ibrahim",
+  keywords: ["Raka Gemi Ibrahim", "Frontend Developer", "Next.js", "React", "IBM Indonesia"],
+};
+
+export default function Home() {
   return (
     <div id="home">
-      <main>
         <HeroSection />
-        <Footer />
-      </main>
+      {/* </main> */}
     </div>
   );
 }

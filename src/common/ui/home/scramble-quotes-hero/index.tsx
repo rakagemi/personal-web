@@ -107,14 +107,13 @@ export default function ScrambleIntroText({
             <p
                 aria-hidden="true"
                 className="
-          invisible
-          pointer-events-none
-          text-[11px] md:text-xl
-          leading-5 md:leading-7
-          font-medium text-center
-          whitespace-normal
-          [text-wrap:normal]
-        "
+                    invisible
+                    pointer-events-none
+                    text-[11px] md:text-xl
+                    leading-5 md:leading-7
+                    font-medium text-center
+                    whitespace-normal
+                    [text-wrap:normal]"
             >
                 <span>Transforming ideas into</span>{" "}
                 <span className="text-blue-500 dark:text-blue-300">
@@ -130,20 +129,19 @@ export default function ScrambleIntroText({
             <p
                 ref={rootRef}
                 className="
-          absolute inset-0
-          text-[11px] md:text-xl
-          leading-5 md:leading-7
-          dark:text-neutral-300 text-neutral-800
-          font-medium text-center
-          whitespace-normal
-          [text-wrap:normal]
-        "
+                    absolute inset-0
+                    text-[11px] md:text-xl
+                    leading-5 md:leading-7
+                    dark:text-neutral-300 text-neutral-800
+                    font-medium text-center
+                    whitespace-normal
+                    [text-wrap:normal]"
             >
                 <span className="scramble-part" data-text="Transforming ideas into">
                     Transforming ideas into
                 </span>{" "}
                 <span
-                    className="scramble-part text-blue-500 dark:text-blue-300"
+                    className="scramble-part text-blue-600 dark:text-blue-300"
                     data-text="interactive and seamless digital"
                 >
                     interactive and seamless digital
@@ -155,7 +153,7 @@ export default function ScrambleIntroText({
                     experiences with cutting-edge
                 </span>{" "}
                 <span
-                    className="scramble-part text-blue-500 dark:text-blue-300"
+                    className="scramble-part text-blue-600 dark:text-blue-300"
                     data-text="frontend development."
                 >
                     frontend development.

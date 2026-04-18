@@ -35,7 +35,7 @@ export function ThemeToggleContainer({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className={cn(
-                "relative w-full p-4 mt-2 mb-4 gap-4 rounded-[64px] flex items-center justify-start text-neutral-600 dark:text-neutral-300",
+                "gw-badge relative w-full p-4 mt-2 mb-4 gap-4 rounded-[64px] flex items-center justify-start text-neutral-600 dark:text-neutral-300",
                 isLight ? "bg-transparent border-neutral-300 hover:bg-neutral-200" : "bg-transparent border-neutral-800 hover:bg-neutral-700 dark:bg-transparent! backdrop-blur-xl! dark:border-transparent",
                 className
             )}
@@ -44,7 +44,7 @@ export function ThemeToggleContainer({
             {/* Sliding White Background - Shifts left/right with bounce */}
             <motion.div
                 className={cn(
-                    "absolute inset-0 w-[50%] bg-white/20 shadow-2xl rounded-[64px] z-10 border-white/50",
+                    "gw-badge absolute inset-0 w-[50%] bg-white/20 shadow-2xl rounded-[64px] z-10",
                 )}
                 variants={{
                     light: { x: "0%" },

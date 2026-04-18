@@ -26,17 +26,16 @@ export const metadata = siteMetadata;
 const Head = () => {
   return (
     <head>
-      <link rel="icon" href="favicon.ico" sizes="any" className="rounded-full" />
+      <link rel="icon" href="favicon.png" sizes="any" className="rounded-full" />
       <link
         rel="apple-touch-icon"
         href="/assets/favicon/apple-icon?<generated>"
         type="image/png"
         sizes="sizes=180x180"
       />
-      <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon.svg" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon.svg" />
-      <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-      <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+      <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+      <link rel="manifest" href="site.webmanifest" />
     </head>
   )
 }

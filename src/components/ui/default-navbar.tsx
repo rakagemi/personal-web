@@ -99,7 +99,7 @@ export const NavBody = ({
       }}
       className={cn(
         "relative z-60 mx-auto hidden flex-row items-center justify-between self-start rounded-full px-4 py-2 lg:flex border transition-colors duration-300",
-        isShrunk ? "border-white/10" : "bg-transparent border-transparent",
+        isShrunk ? "border-white/10 gw-card" : "bg-transparent border-transparent",
         className
       )}
     >
@@ -123,7 +123,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <Link
           onMouseEnter={() => setHovered(idx)}
           onClick={(e) => onItemClick && onItemClick(e, item)}
-          className="relative px-4 py-2 dark:text-white text-neutral-500 hover:text-white cursor-pointer"
+          className="relative gw-btn px-4 py-2 dark:text-white text-black hover:text-white cursor-pointer"
           key={`link-${idx}`}
           href={item.link}
         >
@@ -164,8 +164,7 @@ export const MobileNav = ({
         delay,
       }}
       className={cn(
-        "relative z-50 mx-auto flex flex-col items-center justify-between px-0 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.15)] lg:hidden border backdrop-blur-xl! transition-colors duration-300",
-        "bg-white/10 border-white/20",
+        "relative z-50 gw-card mx-auto flex flex-col items-center justify-between px-0 py-2 backdrop-blur-sm! lg:hidden transition-colors duration-300",
         className
       )}
     >
@@ -218,9 +217,13 @@ export const MobileNavToggle = ({
   onClick: () => void;
 }) => {
   return isOpen ? (
-    <IconX className="text-black dark:text-white" onClick={onClick} />
+    <div className="gw-btn-icon rounded-full">
+      <IconX className="text-white" onClick={onClick} />
+    </div>
   ) : (
-    <IconMenu2 className="text-black dark:text-white" onClick={onClick} />
+    <div className="gw-btn-icon rounded-full">
+      <IconMenu2 className="text-white" onClick={onClick} />
+    </div>
   );
 };
 

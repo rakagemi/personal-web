@@ -1,5 +1,5 @@
 import InfiniteCard, { TechItem } from "@/components/infinite-card";
-import { IconApiApp, IconBrandCss3, IconBrandCypress, IconBrandDocker, IconBrandFigma, IconBrandFirebase, IconBrandFramerMotion, IconBrandGithub, IconBrandGitlab, IconBrandHtml5, IconBrandJavascript, IconBrandMysql, IconBrandNextjs, IconBrandNodejs, IconBrandNuxt, IconBrandReact, IconBrandTypescript, IconBrandVue, IconCode } from "@tabler/icons-react";
+import { IconBrandCss3, IconBrandDocker, IconBrandFigma, IconBrandFirebase, IconBrandFramerMotion, IconBrandGithub, IconBrandGitlab, IconBrandHtml5, IconBrandJavascript, IconBrandLaravel, IconBrandMysql, IconBrandNextjs, IconBrandNodejs, IconBrandNpm, IconBrandNuxt, IconBrandPhp, IconBrandPython, IconBrandReact, IconBrandTypescript, IconBrandVue } from "@tabler/icons-react";
 
 export const techStacks: TechItem[] = [
     { id: "html", name: "HTML5", icon: <IconBrandHtml5 className="text-red-500" /> },
@@ -10,10 +10,13 @@ export const techStacks: TechItem[] = [
     { id: "next", name: "Next.js", icon: <IconBrandNextjs className="text-white" /> },
     { id: "vue", name: "Vue.js", icon: <IconBrandVue className="text-green-500" /> },
     { id: "nuxt", name: "Nuxt.js", icon: <IconBrandNuxt className="text-green-500" /> },
+    { id: "npm", name: "NPM", icon: <IconBrandNpm className="text-[#CC3534]" /> },
     { id: "node", name: "Node.js", icon: <IconBrandNodejs className="text-green-600" /> },
+    { id: "python", name: "Python", icon: <IconBrandPython className="text-[#FFD43B]" /> },
+    { id: "php", name: "PHP", icon: <IconBrandPhp className="text-[#474A8A]" /> },
+    { id: "laravel", name: "Laravel", icon: <IconBrandLaravel className="text-[#F05340]" /> },
     { id: "github", name: "GitHub", icon: <IconBrandGithub className="text-gray-300" /> },
     { id: "docker", name: "Docker", icon: <IconBrandDocker className="text-blue-600" /> },
-    { id: "cypress", name: "Cypress", icon: <IconBrandCypress className="text-purple-500" /> },
     { id: "mysql", name: "MySQL", icon: <IconBrandMysql className="text-blue-300" /> },
     { id: "figma", name: "Figma", icon: <IconBrandFigma className="text-pink-500" /> },
     { id: "firebase", name: "Firebase", icon: <IconBrandFirebase className="text-yellow-400" /> },
@@ -21,7 +24,7 @@ export const techStacks: TechItem[] = [
     { id: "framer-motion", name: "Framer Motion", icon: <IconBrandFramerMotion className="text-yellow-400" /> },
 ];
 
-export default function Expertise() {
+export default function ExpertiseContent() {
     return (
         <section id="expertise" className="relative w-full text-justify mx-auto flex flex-col gap-10 max-w-7xl text-neutral-800 dark:text-white">
             <div className="container w-full mx-auto flex flex-col items-start justify-start gap-10 text-start">
