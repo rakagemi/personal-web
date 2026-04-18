@@ -1,24 +1,69 @@
+import * as z from "zod"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Spinner from "@/components/spinner/Spinner";
-import { Controller, UseFormReturn } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { IconSend } from "@tabler/icons-react";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { ENV } from "@/utils/environment";
+import { formSchema } from "@/lib/form-schema";
 
-type ContactFormValues = {
-  name: string
-  email: string
-  message: string
-}
+export function ContactFormContent() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-type ContactFormContentProps = {
-  form: UseFormReturn<ContactFormValues>
-  onSubmit: (data: ContactFormValues) => void
-  isSubmitting: boolean
-}
+    const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
 
-export function ContactFormContent({ form, onSubmit, isSubmitting }: ContactFormContentProps) {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsSubmitting(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("access_key", `${ENV.formDataKey}`);
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("message", data.message);
+      formData.append("subject", `New Message from ${data.name} via Portfolio`);
+
+      const response = await fetch(`${ENV.formDataEndpoint}/submit`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success("Message sent successfully!", {
+          description: "Thank you for reaching out. I will get back to you soon.",
+          position: "top-center",
+          // PERBAIKAN: Toast theme support
+          className: "bg-white text-neutral-900 border-neutral-200 dark:bg-neutral-950 dark:text-white dark:border-neutral-800 shadow-lg",
+        });
+        form.reset();
+      } else {
+        throw new Error(result.message || "Failed to send message");
+      }
+    } catch (error) {
+      toast.error("Oops! Something went wrong.", {
+        description: "Please try again later or contact me directly via email.",
+        position: "top-center",
+        className: "bg-white text-neutral-900 border-neutral-200 dark:bg-neutral-950 dark:text-white dark:border-neutral-800 shadow-lg",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="lg:col-span-3">
         <Card className="bg-white/60 dark:bg-neutral-900/40 border-neutral-200 dark:border-neutral-800 backdrop-blur-xl shadow-2xl transition-colors">

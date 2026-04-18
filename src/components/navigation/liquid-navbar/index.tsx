@@ -36,10 +36,10 @@ function ThemeToggleButton({ theme, setTheme, mounted }: ThemeToggleButtonProps)
             onClick={() => {
                 setTheme(theme === "dark" ? "light" : "dark");
             }}
-            className="cursor-pointer relative z-60 pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors duration-300"
+            className="gw-btn-icon gw-btn-icon-sm cursor-pointer relative z-60 pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:dark:bg-black/35 hover:bg-white/35 hover:backdrop-blur-2xl text-neutral-600 dark:text-neutral-300 transition-colors duration-300"
             aria-label="Toggle Dark Mode"
         >
-            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            {theme === "dark" ? "🌙" : "☀️"}
         </button>
     );
 }
@@ -124,7 +124,7 @@ export default function NavigationBar() {
                                     const Icon = item.icon
                                     const isActive = pathname === item.link
                                     return (
-                                        <LGIcon className={isActive ? "bg-blue-800! border-blue-800! transition-colors duration-500" : ""} key={item.name} href={item.link}>
+                                        <LGIcon className={isActive ? "bg-blue-500! border-blue-500 transition-colors duration-500" : ""} key={item.name} href={item.link}>
                                             <Icon className={isActive ? "text-white! transition-colors duration-300" : ""} size={30} />
                                         </LGIcon>
                                     );
