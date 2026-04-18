@@ -8,3 +8,5 @@ export function cn(...inputs: ClassValue[]) {
 export const introState = {
     hasPlayed: false,
 };
+
+export const getFallbackImage = "/no-image.webp"

@@ -65,13 +65,7 @@ export default function InfiniteCard({
                     <div
                         key={`${item.id}-${i}`}
 
-                        className="flex shrink-0 items-center justify-center gap-2 rounded-full px-5 py-2.5 transition-colors cursor-default border border-white/20 dark:border-white/10
-                                    bg-white/10 dark:bg-white/5
-                                    backdrop-blur-xl
-                                    shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_8px_20px_rgba(0,0,0,0.10)] duration-300 ease-out
-                                    hover:bg-white/16 dark:hover:bg-white/8
-                                    hover:border-white/30 dark:hover:border-white/15
-                                    hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_14px_28px_rgba(0,0,0,0.16)]"
+                        className="gw-badge flex shrink-0 items-center justify-center gap-2 rounded-full px-5 py-2.5 transition-colors cursor-default border border-white/20 dark:border-white/10 duration-300 ease-out"
                     >
                         <span className="flex items-center justify-center text-xl">
                             {item.icon}

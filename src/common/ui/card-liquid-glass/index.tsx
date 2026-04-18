@@ -516,7 +516,7 @@ import {
 import type { LucideIcon } from "lucide-react"
 import { cn } from "@/utils"
 
-type GlassLevel = "thin" | "medium" | "thick"
+type GlassLevel = "none" | "thin" | "medium" | "thick"
 type SpotlightVariant = "none" | "soft" | "premium"
 
 export interface LiquidGlassCardProps
@@ -544,6 +544,14 @@ const glassMap: Record<
     noise: string
   }
 > = {
+  none: {
+    root: cn(
+      "gw-card"
+    ),
+    inner: "",
+    glow: "",
+    noise: "opacity-[0.01]",
+  },
   thin: {
     root: cn(
       "border-white/10 bg-white/[0.05] backdrop-blur-md",
@@ -719,8 +727,8 @@ export function LiquidGlassCard({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "group relative isolate overflow-hidden rounded-[30px] border text-white",
-        "bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04)),linear-gradient(135deg,rgba(255,255,255,0.10),rgba(255,255,255,0.02))]",
+        "gw-card group relative isolate overflow-hidden rounded-[30px] border text-white",
+        // "bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04)),linear-gradient(135deg,rgba(255,255,255,0.10),rgba(255,255,255,0.02))]",
         "transform-gpu will-change-transform",
         currentGlass.root,
         currentSpotlight.ring,
