@@ -1,4 +1,5 @@
-import { ENV } from "@/utils/environment";
+
+import { CLIENT_ENV } from "@/utils/environment/client";
 import type { Metadata } from "next";
 
 export const siteMetadata: Metadata = {
@@ -13,10 +14,10 @@ export const siteMetadata: Metadata = {
     openGraph: {
         type: "website",
         locale: "en_US",
-        url: `${ENV.url}`,
+        url: `${CLIENT_ENV.url}`,
         siteName: "Raka Gemi Ibrahim Portfolio",
         images: [{
-            url: `${ENV.url}/favicon.png`,
+            url: `${CLIENT_ENV.url}/1420fdb2c1b84a55bc9a61e3050b0fa5.jpg`,
             width: 1200,
             height: 630,
         }],

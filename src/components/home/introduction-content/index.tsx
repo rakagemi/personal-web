@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
-export default function IntroductionContent({ isDark }: { isDark: boolean }) {
+export default function IntroductionContent() {
     const introductionTitleRef = useRef<HTMLDivElement | null>(null);
 
     useGSAP(
@@ -120,10 +120,10 @@ export default function IntroductionContent({ isDark }: { isDark: boolean }) {
 
     return (
         <div ref={introductionTitleRef}>
-            <p className="flex items-center gap-3 text-lg font-medium text-neutral-800 dark:text-neutral-300">
+            <p className="flex items-center gap-3 text-lg font-medium text-neutral-200">
                 <span className="inline-flex items-center gap-1">
                     <Hand
-                        className="animate-wave-animation text-blue-500 dark:text-blue-300"
+                        className="animate-wave-animation text-blue-300"
                         size={28}
                     />
                 </span>
@@ -131,7 +131,7 @@ export default function IntroductionContent({ isDark }: { isDark: boolean }) {
             </p>
 
             <div className="mt-4 flex flex-col space-y-4 lg:flex-row lg:items-center lg:space-x-8 lg:space-y-0 md:gap-4">
-                <h1 className="introduction-role text-pretty text-center text-2xl font-black leading-none text-neutral-950 dark:text-neutral-200 sm:text-left sm:text-5xl md:text-6xl">
+                <h1 className="introduction-role text-pretty text-center text-2xl font-black leading-none text-neutral-100 sm:text-left sm:text-5xl md:text-6xl">
                     <span className="introduction-role-title-1 inline-block whitespace-nowrap">
                         Software
                     </span>
@@ -145,11 +145,7 @@ export default function IntroductionContent({ isDark }: { isDark: boolean }) {
                 <div className="flex items-center justify-center gap-2 pt-2 md:gap-4 md:pt-0">
                     <div className="h-auto w-5 shrink-0 sm:w-7">
                         <Image
-                            src={
-                                isDark
-                                    ? "/assets/icon/white-curly-bracket.svg"
-                                    : "/assets/icon/black-curly-bracket.svg"
-                            }
+                            src={"/assets/icon/white-curly-bracket.svg"}
                             width={30}
                             height={30}
                             alt="curly-brackets"
@@ -163,11 +159,7 @@ export default function IntroductionContent({ isDark }: { isDark: boolean }) {
 
                     <div className="h-auto w-5 shrink-0 rotate-180 sm:w-7">
                         <Image
-                            src={
-                                isDark
-                                    ? "/assets/icon/white-curly-bracket.svg"
-                                    : "/assets/icon/black-curly-bracket.svg"
-                            }
+                            src={"/assets/icon/white-curly-bracket.svg"}
                             width={30}
                             height={30}
                             alt="curly-brackets"

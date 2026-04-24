@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  allowedDevOrigins: [process.env.MOBILE_DEV_IP ?? ""],
   images: {
     qualities: [75, 100],
     remotePatterns: [
@@ -17,6 +18,10 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
         search: '',
+      },
+      {
+        protocol: "https",
+        hostname: "assets.codepen.io",
       },
     ],
   },

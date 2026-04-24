@@ -3,10 +3,11 @@ const required = (value: string | undefined, name: string) => {
   return value;
 };
 
-export const ENV = {
+export const CLIENT_ENV = {
   url: required(process.env.NEXT_PUBLIC_SITE_URL, "NEXT_PUBLIC_SITE_URL"),
   formDataKey: required(process.env.NEXT_PUBLIC_FORM_DATA_KEY, "NEXT_PUBLIC_FORM_DATA_KEY"),
   formDataEndpoint: required(process.env.NEXT_PUBLIC_FORM_DATA_ENDPOINT, "NEXT_PUBLIC_FORM_DATA_ENDPOINT"),
   googleAnalyticsID: required(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, "NEXT_PUBLIC_GOOGLE_ANALYTICS"),
   googleTagManagerID: required(process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER, "NEXT_PUBLIC_GOOGLE_TAG_MANAGER"),
+  maintenanceMode: required(process.env.NEXT_PUBLIC_MAINTENANCE_MODE, "NEXT_PUBLIC_MAINTENANCE_MODE"),
 };
