@@ -116,11 +116,11 @@ export default function ScrambleIntroText({
                     [text-wrap:normal]"
             >
                 <span>Transforming ideas into</span>{" "}
-                <span className="text-blue-500 dark:text-blue-300">
+                <span className="text-blue-300">
                     interactive and seamless digital
                 </span>{" "}
                 <span>experiences with cutting-edge</span>{" "}
-                <span className="text-blue-500 dark:text-blue-300">
+                <span className="text-blue-300">
                     frontend development.
                 </span>
             </p>
@@ -132,7 +132,7 @@ export default function ScrambleIntroText({
                     absolute inset-0
                     text-[11px] md:text-xl
                     leading-5 md:leading-7
-                    dark:text-neutral-300 text-neutral-800
+                    text-neutral-300
                     font-medium text-center
                     whitespace-normal
                     [text-wrap:normal]"
@@ -141,7 +141,7 @@ export default function ScrambleIntroText({
                     Transforming ideas into
                 </span>{" "}
                 <span
-                    className="scramble-part text-blue-600 dark:text-blue-300"
+                    className="scramble-part text-blue-300"
                     data-text="interactive and seamless digital"
                 >
                     interactive and seamless digital
@@ -153,7 +153,7 @@ export default function ScrambleIntroText({
                     experiences with cutting-edge
                 </span>{" "}
                 <span
-                    className="scramble-part text-blue-600 dark:text-blue-300"
+                    className="scramble-part text-blue-300"
                     data-text="frontend development."
                 >
                     frontend development.

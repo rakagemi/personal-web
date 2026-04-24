@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   // Aktifkan dark mode berbasis class (Standar Shadcn)
   darkMode: "class",
-  
+
   // Beritahu Tailwind di mana saja letak file React Anda
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,7 +11,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}", // Wajib ada jika Anda pakai folder src
   ],
-  
+
   theme: {
     extend: {
       // Konfigurasi Animasi Accordion yang Super Smooth
@@ -31,7 +31,7 @@ const config: Config = {
       },
     },
   },
-  
+
   // Panggil plugin yang baru saja kita instal
   plugins: [require("tailwindcss-animate")],
 };

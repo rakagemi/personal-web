@@ -1,4 +1,4 @@
-import { ENV } from '@/utils/environment'
+import { CLIENT_ENV } from '@/utils/environment/client'
 import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: [`${ENV.url}/sitemap.xml`],
+    sitemap: [`${CLIENT_ENV.url}/sitemap.xml`],
   }
 }

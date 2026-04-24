@@ -161,7 +161,7 @@ export default function DockMotion({
                 className={clsx(
                     "relative flex w-full items-center justify-center md:items-end md:w-fit gap-4 rounded-full md:rounded-4xl",
                     "pl-5 pt-2 sm:pt-4 pb-6",
-                    "sm:border sm:border-white/15 sm:dark:border-white/10",
+                    "sm:border sm:border-white/10",
                     "sm:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_20px_50px_rgba(0,0,0,0.18)]"
                 )}
             >

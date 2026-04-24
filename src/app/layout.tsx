@@ -8,8 +8,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import NavigationBar from "@/components/navigation/liquid-navbar";
 import { LayoutAOD } from "@/components/layout-aod";
-import { ENV } from "@/utils/environment";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { CLIENT_ENV } from "@/utils/environment/client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,8 +51,8 @@ const Body = ({ children }: { children: React.ReactNode }) => {
         <SmoothScrollProvider>
           <TooltipProvider>
             {children}
-            <GoogleTagManager gtmId={ENV.googleTagManagerID || ""} />
-            <GoogleAnalytics gaId={ENV.googleAnalyticsID || ""} />
+            <GoogleTagManager gtmId={CLIENT_ENV.googleTagManagerID || ""} />
+            <GoogleAnalytics gaId={CLIENT_ENV.googleAnalyticsID || ""} />
           </TooltipProvider>
         </SmoothScrollProvider>
         </LayoutAOD>

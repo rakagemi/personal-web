@@ -10,17 +10,19 @@ import {
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/default-navbar";
-
 import { useMotionValueEvent, useScroll } from "motion/react";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useLenis } from "lenis/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
-import { Sun, Moon} from "lucide-react";
 import { NAV_ITEMS } from "@/common/constants/navigation";
-import { LGIcon } from "@/common/ui/icon";
+import { LGIcon } from "@/common/ui/icon/liquid-glass";
 import { ThemeToggleContainer } from "@/common/ui/mobile-nav-toogle-theme";
-import AnimatedContent from "@/components/animated-content";
+import { cn } from "@/utils";
+import { CLIENT_ENV } from "@/utils/environment/client";
+import {
+    motion,
+    AnimatePresence,
+} from "motion/react";
 
 type ThemeToggleButtonProps = {
     theme: string | undefined;
@@ -45,26 +47,16 @@ function ThemeToggleButton({ theme, setTheme, mounted }: ThemeToggleButtonProps)
 }
 
 export default function NavigationBar() {
+    const isMaintenance = CLIENT_ENV.maintenanceMode;
     const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isShrunk, setIsShrunk] = useState(false);
     const router = useRouter();
-    const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
+    const constraintsRef = useRef<HTMLDivElement>(null);
+    const isDragging = useRef(false);
 
     const { scrollY } = useScroll();
     const lenis = useLenis();
-
-    // Mencegah Hydration Error pada icon tema
-    useEffect(() => {
-        const timeoutId = window.setTimeout(() => {
-            setMounted(true);
-        }, 0);
-
-        return () => {
-            window.clearTimeout(timeoutId);
-        };
-    }, []);
 
     useMotionValueEvent(scrollY, "change", (current) => {
         if (current > 100) {
@@ -87,22 +79,103 @@ export default function NavigationBar() {
         }
     };
 
+    if (isMaintenance == "true") return null
     return (
         <div className="pointer-events-none relative z-50">
             <div className="pointer-events-auto">
-                <Navbar isShrunk={isShrunk}>
+
+                <Navbar >
                     {/* --- DESKTOP NAVIGATION --- */}
-                    <NavBody isShrunk={isShrunk}>
+                    {/* <NavBody isShrunk={isShrunk}>
                         <NavbarLogo theme={theme === "dark" ? "light" : "dark"} />
-                        <NavItems items={NAV_ITEMS} onItemClick={handleItemClick} />
-                        {/* Tambahkan Theme Toggle di kanan Desktop */}
+                        <NavItems isShrunk={isShrunk} items={NAV_ITEMS} onItemClick={handleItemClick} />
                         <div className="flex items-center gap-4 relative z-50 pointer-events-auto">
                             <ThemeToggleButton theme={theme} setTheme={setTheme} mounted={mounted} />
                         </div>
-                    </NavBody>
+                    </NavBody> */}
 
                     {/* --- MOBILE NAVIGATION --- */}
-                    <MobileNav isShrunk={isShrunk}>
+                    <div ref={constraintsRef} className="fixed inset-0 pointer-events-none z-40" />
+                    <MobileNav
+                    >
+
+                        <motion.div
+                            drag
+                            onDragStart={() => { isDragging.current = true; }}
+                            dragMomentum={false}
+                            dragElastic={0.1}
+                            dragConstraints={constraintsRef}
+                            onDragEnd={() => { setTimeout(() => { isDragging.current = false; }, 100); }}
+                            className={cn(
+                                isMobileMenuOpen ? "gw-card w-fit" : "",
+                                "relative flex flex-row items-center justify-end",
+                            )}
+                            style={{
+                                left: 0,
+                                right: 18,
+                                bottom: 0, // atau top: 16 sesuai posisi awal kamu
+                            }}
+                            whileDrag={{ scale: 1.05 }}
+                        >
+                            {/* Menu muncul absolute, sejajar toggle */}
+                            <MobileNavMenu
+                                isOpen={isMobileMenuOpen}
+                                onClose={() => setIsMobileMenuOpen(false)}
+                            >
+                                <div className="flex flex-row gap-3 items-center justify-end">
+                                    {NAV_ITEMS.map((item, index) => {
+                                        const Icon = item.icon;
+                                        const isActive = pathname === item.link;
+                                        return (
+                                            <motion.div
+                                                key={item.name}
+                                                initial={{ opacity: 0, x: 20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, x: 20 }}
+                                                transition={{
+                                                    duration: 0.25,
+                                                    delay: index * 0.05, // stagger per icon
+                                                    ease: "easeOut",
+                                                }}
+                                            >
+                                                <LGIcon
+                                                    className={cn(
+                                                        "transition-colors duration-500",
+                                                        item.mobile_hover_background_color,
+                                                        item.mobile_hover_border_color,
+                                                        isActive && item.mobile_background_color_active,
+                                                        isActive && item.mobile_border_color_active,
+                                                        isActive && "shadow-none! border-none!",
+                                                    )}
+                                                    href={item.link}
+                                                >
+                                                    <Icon
+                                                        className={cn(
+                                                            "text-white",
+                                                            isActive && "text-white! transition-colors duration-300",
+                                                        )}
+                                                        size={20}
+                                                    />
+                                                </LGIcon>
+                                            </motion.div>
+                                        );
+                                    })}
+                                </div>
+                            </MobileNavMenu>
+
+                            {/* Toggle selalu di kanan, z lebih tinggi */}
+                            <MobileNavHeader className="relative z-50 items-center justify-end">
+                                <MobileNavToggle
+                                    isOpen={isMobileMenuOpen}
+                                    onClick={() => {
+                                        if (!isDragging.current) setIsMobileMenuOpen(!isMobileMenuOpen);
+                                    }}
+                                />
+                            </MobileNavHeader>
+
+                        </motion.div>
+                    </MobileNav>
+                    {/* <MobileNav isShrunk={isShrunk}>
                         <MobileNavHeader>
                             <NavbarLogo theme={theme === "dark" ? "light" : "dark"} />
                             <MobileNavToggle
@@ -124,14 +197,29 @@ export default function NavigationBar() {
                                     const Icon = item.icon
                                     const isActive = pathname === item.link
                                     return (
-                                        <LGIcon className={isActive ? "bg-blue-500! border-blue-500 transition-colors duration-500" : ""} key={item.name} href={item.link}>
-                                            <Icon className={isActive ? "text-white! transition-colors duration-300" : ""} size={30} />
+                                        <LGIcon
+                                            className={cn(
+                                                "transition-colors duration-500",
+                                                isActive && item.mobile_background_color_active,
+                                                isActive && item.mobile_border_color_active,
+                                                isActive && "shadow-none! border-none!",
+                                            )}
+                                            key={item.name}
+                                            href={item.link}
+                                        >
+                                            <Icon
+                                                className={cn(
+                                                    isActive && "text-white! transition-colors duration-300",
+                                                    "text-neutral-800 dark:text-white"
+                                                )}
+                                                size={30}
+                                            />
                                         </LGIcon>
                                     );
                                 })}
                             </div>
                         </MobileNavMenu>
-                    </MobileNav>
+                    </MobileNav> */}
                 </Navbar>
             </div>
         </div>

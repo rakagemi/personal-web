@@ -19,7 +19,7 @@ interface SlideInButtonProps extends HTMLMotionProps<"button"> {
 export function SlideInButton({
   initialText,
   hoverText,
-  initialFill = "bg-neutral-900",
+  initialFill = "",
   hoverFill = "bg-blue-500",
   hasBorder = true,
   borderColor = "border-neutral-800",
