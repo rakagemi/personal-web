@@ -1,4 +1,4 @@
-import { ContactMainContent } from "@/common/ui/contact/contact-main";
+import ContactMainContent from "@/common/ui/contact/contact-main";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

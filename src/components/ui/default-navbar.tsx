@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/utils";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import {
   motion,
   AnimatePresence,
@@ -8,6 +8,10 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
+import { GrContact } from "react-icons/gr";
+import { BsCollectionFill } from "react-icons/bs";
+import { LuWallpaper } from "react-icons/lu";
+import { ListIndentDecrease } from "lucide-react";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -33,6 +37,7 @@ interface NavItemsProps {
     e: React.MouseEvent<HTMLAnchorElement>,
     item: { name: string; link: string }
   ) => void;
+  isShrunk?: boolean;
 }
 
 interface MobileNavProps {
@@ -55,6 +60,12 @@ interface MobileNavMenuProps {
   delay?: number;
 }
 
+const NavNotShrunk = [
+  { id: "1", name: "Home", link: "/", icon: <LuWallpaper className="text-white" /> },
+  { id: "2", name: "Collection", link: "/about", icon: <BsCollectionFill className="text-white" /> },
+  { id: "3", name: "contact", link: "/contact", icon: <GrContact className="text-white" /> },
+]
+
 export const Navbar = ({
   children,
   className,
@@ -62,13 +73,13 @@ export const Navbar = ({
   delay = 0,
 }: NavbarProps) => {
   return (
-    <div className={cn("fixed inset-x-0 top-4 z-50 w-full", className)}>
+    <div className={cn("fixed inset-x-0 top-8 z-50 w-full", className)}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(
-              child as React.ReactElement<{ isShrunk?: boolean; delay?: number }>,
-              { isShrunk, delay }
-            )
+            child as React.ReactElement<{  delay?: number }>,
+            { delay }
+          )
           : child
       )}
     </div>
@@ -108,7 +119,7 @@ export const NavBody = ({
   );
 };
 
-export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
+export const NavItems = ({ items, className, onItemClick, isShrunk }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
@@ -119,23 +130,40 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         className
       )}
     >
-      {items.map((item, idx) => (
-        <Link
-          onMouseEnter={() => setHovered(idx)}
-          onClick={(e) => onItemClick && onItemClick(e, item)}
-          className="relative gw-btn px-4 py-2 dark:text-white text-black hover:text-white cursor-pointer"
-          key={`link-${idx}`}
-          href={item.link}
-        >
-          {hovered === idx && (
-            <motion.div
-              layoutId="hovered-default"
-              className="absolute inset-0 h-full w-full rounded-full bg-blue-500 dark:bg-neutral-800"
-            />
-          )}
-          <span className="relative z-20">{item.name}</span>
-        </Link>
-      ))}
+        {/* {!isShrunk && NavNotShrunk.map((item, idx) => (
+                    <Link
+            onMouseEnter={() => setHovered(idx)}
+            onClick={(e) => onItemClick && onItemClick(e, item)}
+            className={cn(
+              "relative dark:text-white text-black hover:text-white cursor-pointer",
+              isShrunk ? "" : "gw-btn-icon gw-btn-icon-sm rounded-full"
+            )}
+            key={`link-${idx}`}
+            href={item.link}
+          >
+             {item.icon}
+          </Link>
+        ))} */}
+        {items.map((item, idx) => (
+          <Link
+            onMouseEnter={() => setHovered(idx)}
+            onClick={(e) => onItemClick && onItemClick(e, item)}
+            className={cn(
+              "relative px-4 py-2 dark:text-white text-black hover:text-white cursor-pointer",
+              isShrunk ? "" : "gw-btn rounded-full"
+            )}
+            key={`link-${idx}`}
+            href={item.link}
+          >
+            {hovered === idx && (
+              <motion.div
+                layoutId="hovered-default"
+                className="absolute inset-0 h-full w-full rounded-full bg-blue-500 dark:bg-neutral-800"
+              />
+            )}
+            <span className="relative z-20">{item.name}</span>
+          </Link>
+        ))}
     </motion.div>
   );
 };
@@ -151,9 +179,7 @@ export const MobileNav = ({
       initial={{ opacity: 0, y: -20 }}
       animate={{
         opacity: 1,
-        width: "90%",
-        paddingRight: "16px",
-        paddingLeft: "16px",
+        width: "100%",
         borderRadius: "2rem",
         y: 0,
       }}
@@ -164,7 +190,8 @@ export const MobileNav = ({
         delay,
       }}
       className={cn(
-        "relative z-50 gw-card mx-auto flex flex-col items-center justify-between px-0 py-2 backdrop-blur-sm! lg:hidden transition-colors duration-300",
+        // "relative z-50 gw-card mx-auto flex flex-col items-center justify-between px-0 py-2 backdrop-blur-sm! transition-colors duration-300",
+        "relative z-50 pr-6 mx-auto flex flex-col items-end justify-end py-2 transition-colors duration-300",
         className
       )}
     >
@@ -175,7 +202,7 @@ export const MobileNav = ({
 
 export const MobileNavHeader = ({ children, className }: MobileNavHeaderProps) => {
   return (
-    <div className={cn("flex w-full flex-row items-center justify-between", className)}>
+    <div className={cn("   ", className)}>
       {children}
     </div>
   );
@@ -197,7 +224,9 @@ export const MobileNavMenu = ({
           exit={{ opacity: 0, y: -10 }}
           transition={{ delay }}
           className={cn(
-            "relative z-50 mx-auto flex flex-col items-center justify-between px-0 py-2 lg:hidden border transition-colors duration-300",
+            // "relative z-50 mx-auto flex flex-col items-center justify-between px-0 py-2 lg:hidden border transition-colors duration-300",
+            // "bg-transparent border-transparent",
+            "relative z-50 px-2 items-center justify-end border transition-colors duration-300",
             "bg-transparent border-transparent",
             className
           )}
@@ -218,11 +247,11 @@ export const MobileNavToggle = ({
 }) => {
   return isOpen ? (
     <div className="gw-btn-icon rounded-full">
-      <IconX className="text-white" onClick={onClick} />
+      <IconX className="dark:text-white text-neutral-800" onClick={onClick} />
     </div>
   ) : (
     <div className="gw-btn-icon rounded-full">
-      <IconMenu2 className="text-white" onClick={onClick} />
+      <ListIndentDecrease className="dark:text-white text-neutral-800" onClick={onClick} />
     </div>
   );
 };

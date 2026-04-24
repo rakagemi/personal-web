@@ -77,24 +77,24 @@ export default function Footer() {
     return (
         <footer
             ref={footerRef}
-            className="relative z-20 w-full overflow-hidden border-t border-neutral-200/50 bg-white/65 px-6 py-8 shadow-[0_-8px_30px_rgba(0,0,0,0.04)] backdrop-blur-xl dark:border-neutral-800/50 dark:bg-neutral-950/50 dark:shadow-[0_-8px_30px_rgba(0,0,0,0.18)]"
+            className="relative z-20 w-full overflow-hidden border-t px-6 py-8 backdrop-blur-xl border-neutral-800/50 bg-neutral-950/50 shadow-[0_-8px_30px_rgba(0,0,0,0.18)]"
         >
-            {/* Highlight tipis agar terasa kaca */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/70 to-transparent dark:via-white/20" />
+            {/* Highlight thin */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent to-transparent via-white/20" />
 
-            {/* Shadow lembut agar transisi ke bawah lebih mewah */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-black/10 to-transparent dark:from-black/30" />
+            {/* Shadow Smooth */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t to-transparent from-black/30" />
 
             {/* Line animasi */}
-            <div className="footer-line absolute left-0 top-0 h-px w-full bg-linear-to-r from-transparent via-neutral-400/60 to-transparent dark:via-neutral-600/60" />
+            <div className="footer-line absolute left-0 top-0 h-px w-full bg-linear-to-r from-transparent  to-transparent via-neutral-600/60" />
 
             <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
                 <div className="footer-copy flex flex-col items-center gap-1 text-center md:items-start md:text-left">
-                    <p className="text-sm font-medium text-neutral-800/85 dark:text-neutral-200/85">
+                    <p className="text-sm font-medium text-neutral-200/85">
                         © {currentYear} Raka Gemi Ibrahim. All rights reserved.
                     </p>
-                    <p className="text-xs text-neutral-600/75 dark:text-neutral-400/75">
-                        Crafted with Next.js, Tailwind CSS, Framer Motion & GSAP.
+                    <p className="text-xs text-neutral-400/75">
+                        Crafted with Next.js, Tailwind, Framer Motion, GSAP & Three.js.
                     </p>
                 </div>
 
@@ -106,7 +106,7 @@ export default function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={social.name}
-                                className={`group flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/15 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:bg-white/25 dark:border-white/10 dark:bg-white/4 dark:hover:bg-white/8 ${social.className}`}
+                                className={`group flex h-11 w-11 items-center justify-center rounded-full border shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] border-white/10 bg-white/4 hover:bg-white/8 ${social.className}`}
                             >
                                 <span className={`transition-transform duration-300 group-hover:scale-110 ${social.className}`}>
                                     {social.icon}

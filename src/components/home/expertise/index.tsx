@@ -26,7 +26,7 @@ export const techStacks: TechItem[] = [
 
 export default function ExpertiseContent() {
     return (
-        <section id="expertise" className="relative w-full text-justify mx-auto flex flex-col gap-10 max-w-7xl text-neutral-800 dark:text-white">
+        <section id="expertise" className="relative w-full text-justify mx-auto flex flex-col gap-10 max-w-7xl text-white">
             <div className="container w-full mx-auto flex flex-col items-start justify-start gap-10 text-start">
                 {/* <div className="flex flex-col items-start justify-start gap-5 text-start">
 x

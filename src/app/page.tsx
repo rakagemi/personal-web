@@ -1,4 +1,4 @@
-import HeroSection from "@/common/ui/home/hero";
+import HomeMainContent from "@/common/ui/home/home-main";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,10 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return (
-    <div id="home">
-        <HeroSection />
-      {/* </main> */}
-    </div>
-  );
+  return <HomeMainContent />;
 }
