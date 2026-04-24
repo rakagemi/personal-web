@@ -73,7 +73,7 @@ export const Navbar = ({
   delay = 0,
 }: NavbarProps) => {
   return (
-    <div className={cn("fixed inset-x-0 top-8 z-50 w-full", className)}>
+    <div className={cn("fixed top-8 right-8 z-30 w-fit", className)}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(
