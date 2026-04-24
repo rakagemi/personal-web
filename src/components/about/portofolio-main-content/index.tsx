@@ -40,7 +40,7 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
         <div id={`portfolio-${company.name}`}>
             <main className="min-h-screen relative bg-neutral-100 dark:bg-neutral-900">
                 <ParticleBackground />
-                <article className="relative mx-auto max-w-7xl pt-32 px-6 py-20 md:px-10">
+                <article className="relative mx-auto max-w-7xl pt-10 md:pt-20 px-6 py-20 md:px-10">
                     {/* header card */}
                     <header className="gw-card mb-12 rounded-[32px] border border-black/10 dark:border-white/10 p-6 md:p-10">
                         <nav aria-label="Breadcrumb" className="mb-3 md:mb-6 text-[12px] sm:text-sm text-black/50 dark:text-white/50">

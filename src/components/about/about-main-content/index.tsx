@@ -24,17 +24,23 @@ const ALL_PANELS = [
 export default function AboutMainContent() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      if (!containerRef.current) return;
+useGSAP(
+  () => {
+    if (!containerRef.current) return;
 
-      const panelEls = gsap.utils.toArray<HTMLElement>(".panel", containerRef.current);
-      if (!panelEls.length) return;
+    const panelEls = gsap.utils.toArray<HTMLElement>(".panel", containerRef.current);
 
-      panelEls.forEach((panel, i) => {
-        const content = panel.querySelector<HTMLElement>(".panel-content");
-        if (!content || i === 0) return;
+    panelEls.forEach((panel, i) => {
+      ScrollTrigger.create({
+        trigger: panel,
+        start: "top top",
+        pin: true,
+        pinSpacing: false,
+        scrub: true,
+      });
 
+      const content = panel.querySelector<HTMLElement>(".panel-content");
+      if (content && i !== 0) {
         gsap.fromTo(
           content,
           { opacity: 0, y: 50 },
@@ -42,7 +48,6 @@ export default function AboutMainContent() {
             opacity: 1,
             y: 0,
             duration: 0.7,
-            ease: "power3.out",
             scrollTrigger: {
               trigger: panel,
               start: "top 80%",
@@ -50,25 +55,13 @@ export default function AboutMainContent() {
             },
           }
         );
-      });
+      }
+    });
 
-      // ─── Snap global ───────────────────────────────────────────────────────
-      ScrollTrigger.create({
-        trigger: containerRef.current,   // ← tambahkan trigger eksplisit
-        start: "top top",
-        end: "bottom bottom",
-        snap: {
-          snapTo: 1 / (ALL_PANELS.length - 1),
-          duration: { min: 0.4, max: 0.7 },
-          delay: 0.2,
-          ease: "power2.inOut",
-        },
-      });
-
-      ScrollTrigger.refresh();
-    },
-    { scope: containerRef, dependencies: [] }
-  );
+    ScrollTrigger.refresh();
+  },
+  { scope: containerRef, dependencies: [] }
+);
 
   return (
     <div id="about">
@@ -82,7 +75,6 @@ export default function AboutMainContent() {
             key={item.slug}
             className="panel"
             style={{
-              position: "sticky",
               top: 0,
               height: "100vh",
               width: "100%",
@@ -141,7 +133,7 @@ export default function AboutMainContent() {
                       shadow-[0_12px_40px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.08)]
                       backdrop-blur-2xl backdrop-saturate-150"
                   >
-                    <Image src="/assets/image/unnamed.jpg" loading="eager" className="object-cover" width={80} height={80} alt="logo" />
+                    <Image src="/assets/image/unnamed.jpg" priority loading="eager" className="object-cover" width={80} height={80} alt="logo" />
                   </div>
                   <motion.div
                     animate={{ y: [-5, 5, -5], opacity: [0.5, 1, 0.5] }}

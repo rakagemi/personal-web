@@ -73,7 +73,7 @@ export const Navbar = ({
   delay = 0,
 }: NavbarProps) => {
   return (
-    <div className={cn("fixed inset-x-0 top-8 z-50 w-full", className)}>
+    <div className={cn("fixed top-8 right-8 z-30 w-fit", className)}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(
@@ -191,7 +191,7 @@ export const MobileNav = ({
       }}
       className={cn(
         // "relative z-50 gw-card mx-auto flex flex-col items-center justify-between px-0 py-2 backdrop-blur-sm! transition-colors duration-300",
-        "relative z-50 pr-6 mx-auto flex flex-col items-end justify-end py-2 transition-colors duration-300",
+        "absolute z-50 pr-6 mx-auto flex flex-col items-end justify-end py-2 transition-colors duration-300",
         className
       )}
     >
