@@ -47,7 +47,7 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
                             <ol className="flex items-center gap-2">
                                 <li><Link href="/">Home</Link></li>
                                 <li>/</li>
-                                <li><Link href="/about/portfolio">Portfolio</Link></li>
+                                <li><Link href="/about">Portfolio</Link></li>
                                 <li>/</li>
                                 <li aria-current="page">{company.name}</li>
                             </ol>

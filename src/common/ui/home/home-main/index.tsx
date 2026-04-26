@@ -28,6 +28,7 @@ export default function HomeMainContent() {
             <main className="relative">
                 <BackgroundSection
                     opacity={"100"}
+                    backgroundImage={"/assets/home/dark-bg-section.jpg"}
                     animationMode="initial-only"
                 />
                 <section className="relative w-full min-h-screen overflow-hidden flex items-center">

@@ -9,6 +9,8 @@ interface ParallaxImageProps {
   intensity?: number;
   gyroIntensity?: number;
   lerpSpeed?: number;
+  lerpSpeedY?: number;
+  gyroSmoothing?: number;
   className?: string;
   debug?: boolean;
 }
@@ -20,21 +22,22 @@ export default function ParallaxImage({
   intensity = 0.04,
   gyroIntensity = 0.06,
   lerpSpeed = 0.045,
+  lerpSpeedY = 0.028,      // Lebih lambat dari X → geser atas-bawah terasa lebih smooth
+  gyroSmoothing = 0.15,    // Pre-smooth gyro sebelum masuk lerp utama
   className = "",
   debug = false,
 }: ParallaxImageProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const gyroEnabledRef = useRef(false);
   const gyroTargetRef = useRef({ x: 0, y: 0 });
+  const gyroSmoothedRef = useRef({ x: 0, y: 0 }); // Buffer smooth gyro
   const baseOrientationRef = useRef<{ gamma: number; beta: number } | null>(null);
 
   const [gyroStatus, setGyroStatus] = useState<GyroStatus>("idle");
   const [debugInfo, setDebugInfo] = useState("");
 
-  // Detect mobile
-const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
-  // iOS 13+ needs permission via HTTPS + user gesture
   const needsPermission =
     typeof DeviceOrientationEvent !== "undefined" &&
     typeof (DeviceOrientationEvent as unknown as { requestPermission?: unknown })
@@ -44,7 +47,6 @@ const isMobile = useIsMobile()
     (e: DeviceOrientationEvent) => {
       if (e.gamma === null || e.beta === null) return;
 
-      // Calibrate on first event
       if (!baseOrientationRef.current) {
         baseOrientationRef.current = { gamma: e.gamma, beta: e.beta };
         return;
@@ -53,18 +55,27 @@ const isMobile = useIsMobile()
       const clamp = (v: number, min: number, max: number) =>
         Math.max(min, Math.min(max, v));
 
-      const dx = clamp(
-        (e.gamma - baseOrientationRef.current.gamma) / 45,
-        -1,
-        1
-      );
-      const dy = clamp(
-        (e.beta - baseOrientationRef.current.beta) / 45,
-        -1,
-        1
-      );
+      // Dead zone kecil untuk filter noise sensor
+      const deadZone = 0.5; // derajat
+      const rawDx = e.gamma - baseOrientationRef.current.gamma;
+      const rawDy = e.beta - baseOrientationRef.current.beta;
 
-      gyroTargetRef.current = { x: dx, y: -dy };
+      const filteredDx = Math.abs(rawDx) < deadZone ? 0 : rawDx;
+      const filteredDy = Math.abs(rawDy) < deadZone ? 0 : rawDy;
+
+      const dx = clamp(filteredDx / 45, -1, 1);
+      const dy = clamp(filteredDy / 45, -1, 1);
+
+      // Pre-smooth target gyro (satu layer lerp sebelum masuk animate loop)
+      gyroSmoothedRef.current.x +=
+        (dx - gyroSmoothedRef.current.x) * gyroSmoothing;
+      gyroSmoothedRef.current.y +=
+        (-dy - gyroSmoothedRef.current.y) * gyroSmoothing;
+
+      gyroTargetRef.current = {
+        x: gyroSmoothedRef.current.x,
+        y: gyroSmoothedRef.current.y,
+      };
 
       if (debug) {
         setDebugInfo(
@@ -72,14 +83,13 @@ const isMobile = useIsMobile()
         );
       }
     },
-    [debug]
+    [debug, gyroSmoothing]
   );
 
   const enableGyro = useCallback(async () => {
     setGyroStatus("pending");
 
     try {
-      // iOS 13+ permission request — MUST be called from a user gesture
       if (needsPermission) {
         const result = await (
           DeviceOrientationEvent as unknown as {
@@ -93,7 +103,6 @@ const isMobile = useIsMobile()
         }
       }
 
-      // Test if deviceorientation actually fires (Android check)
       let fired = false;
       const testHandler = (e: DeviceOrientationEvent) => {
         if (e.gamma !== null || e.beta !== null) fired = true;
@@ -103,7 +112,6 @@ const isMobile = useIsMobile()
       window.removeEventListener("deviceorientation", testHandler);
 
       if (!fired) {
-        // Try absolute fallback (some Android browsers)
         window.addEventListener(
           "deviceorientationabsolute",
           onOrientation as EventListener,
@@ -112,7 +120,8 @@ const isMobile = useIsMobile()
       }
 
       gyroEnabledRef.current = true;
-      baseOrientationRef.current = null; // reset calibration
+      baseOrientationRef.current = null;
+      gyroSmoothedRef.current = { x: 0, y: 0 };
       window.addEventListener("deviceorientation", onOrientation, true);
       setGyroStatus("granted");
     } catch (err) {
@@ -121,7 +130,6 @@ const isMobile = useIsMobile()
     }
   }, [needsPermission, onOrientation]);
 
-  // Auto-enable on Android (no permission needed, works on HTTP too)
   useEffect(() => {
     if (!isMobile || needsPermission) return;
 
@@ -162,6 +170,8 @@ const isMobile = useIsMobile()
 
     const targetMouse = new THREE.Vector2(0, 0);
     const currentMouse = new THREE.Vector2(0, 0);
+    // Buffer kedua khusus Y untuk double-lerp → extra smooth
+    const smoothMouseY = { value: 0 };
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -196,12 +206,27 @@ const isMobile = useIsMobile()
       raf = requestAnimationFrame(animate);
 
       if (gyroEnabledRef.current) {
+        // Pakai gyroIntensity saat gyro aktif
+        if (material) material.uniforms.uIntensity.value = gyroIntensity;
+
         const g = gyroTargetRef.current;
+
+        // X: lerp normal
         currentMouse.x = lerp(currentMouse.x, g.x, lerpSpeed);
-        currentMouse.y = lerp(currentMouse.y, g.y, lerpSpeed);
+
+        // Y: double-lerp → pre-smooth dulu ke buffer, baru lerp ke currentMouse
+        smoothMouseY.value = lerp(smoothMouseY.value, g.y, lerpSpeedY);
+        currentMouse.y = lerp(currentMouse.y, smoothMouseY.value, lerpSpeedY);
       } else {
+        // Pakai intensity normal saat mouse
+        if (material) material.uniforms.uIntensity.value = intensity;
+
+        // Mouse X: lerp normal
         currentMouse.x = lerp(currentMouse.x, targetMouse.x, lerpSpeed);
-        currentMouse.y = lerp(currentMouse.y, targetMouse.y, lerpSpeed);
+
+        // Mouse Y: double-lerp untuk extra smooth
+        smoothMouseY.value = lerp(smoothMouseY.value, targetMouse.y, lerpSpeedY);
+        currentMouse.y = lerp(currentMouse.y, smoothMouseY.value, lerpSpeedY);
       }
 
       if (material) material.uniforms.uMouse.value.copy(currentMouse);
@@ -295,9 +320,8 @@ const isMobile = useIsMobile()
       if (renderer.domElement.parentNode === mount)
         mount.removeChild(renderer.domElement);
     };
-  }, [imageUrl, intensity, lerpSpeed]);
+  }, [imageUrl, intensity, gyroIntensity, lerpSpeed, lerpSpeedY]);
 
-  // Cleanup gyro listeners on unmount
   useEffect(() => {
     return () => {
       window.removeEventListener("deviceorientation", onOrientation);
@@ -314,7 +338,6 @@ const isMobile = useIsMobile()
       className={`absolute inset-0 overflow-hidden ${className}`}
       style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}
     >
-      {/* iOS: show button because permission requires user gesture */}
       {isMobile && needsPermission && gyroStatus !== "granted" && (
         <button
           onClick={enableGyro}
@@ -340,11 +363,10 @@ const isMobile = useIsMobile()
             ? "Requesting…"
             : gyroStatus === "denied"
             ? "⚠️ Motion denied — tap to retry"
-            : "🌀 Enable motion parallax"}
+            : "🌀 Enable motion!"}
         </button>
       )}
 
-      {/* Debug overlay — pass debug={true} to use */}
       {isMobile && debug && (
         <div
           style={{

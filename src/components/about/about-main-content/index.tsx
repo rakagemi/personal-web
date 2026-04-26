@@ -88,7 +88,9 @@ useGSAP(
                     imageUrl={"/assets/c1fc9d7f6ae08d56f2b84e81799790a5.gif"}
                     intensity={0.04}
                     gyroIntensity={0.06}
-                    lerpSpeed={0.030}
+                    lerpSpeed={0.045}
+                    lerpSpeedY={0.028}
+                    gyroSmoothing={0.15}
                     debug={false}
                   />
                 <CursorTrail />
@@ -193,7 +195,7 @@ useGSAP(
             ) : (
               <div className="bg-neutral-900 panel-content h-full w-full flex items-center justify-center">
                 <ArchitectBackground theme={"dark"} />
-                <div className="w-full max-w-4xl px-8">
+                <div className="w-full max-w-4xl px-8 z-50">
                   <PortfolioCard company={item as typeof portfolioCompanies[0]} />
                 </div>
               </div>
