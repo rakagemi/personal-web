@@ -84,6 +84,7 @@ export function AssetGallery({ company }: { company: PortfolioCompany }) {
                 <figure className="relative overflow-hidden rounded-[18px]">
                   <div className="relative aspect-4/3 w-full overflow-hidden rounded-[18px]">
                     <Image
+                      priority
                       loading="eager"
                       src={getAssetImage}
                       alt={asset.alt}
