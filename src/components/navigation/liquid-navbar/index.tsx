@@ -10,7 +10,7 @@ import {
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/default-navbar";
-import { useMotionValueEvent, useScroll } from "motion/react";
+import { useMotionValue, useMotionValueEvent, useScroll } from "motion/react";
 import { useState, useRef } from "react";
 import { useLenis } from "lenis/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -54,6 +54,9 @@ export default function NavigationBar() {
     const router = useRouter();
     const constraintsRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
 
     const { scrollY } = useScroll();
     const lenis = useLenis();
@@ -84,7 +87,7 @@ export default function NavigationBar() {
         <div className="pointer-events-none relative z-50">
             <div className="pointer-events-auto">
 
-                <Navbar >
+                <Navbar>
                     {/* --- DESKTOP NAVIGATION --- */}
                     {/* <NavBody isShrunk={isShrunk}>
                         <NavbarLogo theme={theme === "dark" ? "light" : "dark"} />
@@ -98,23 +101,18 @@ export default function NavigationBar() {
                     <div ref={constraintsRef} className="fixed inset-0 pointer-events-none z-40" />
                     <MobileNav
                     >
-
                         <motion.div
                             drag
+                            style={{ x, y }}
                             onDragStart={() => { isDragging.current = true; }}
                             dragMomentum={false}
                             dragElastic={0.1}
                             dragConstraints={constraintsRef}
                             onDragEnd={() => { setTimeout(() => { isDragging.current = false; }, 100); }}
-                            className={cn(
-                                isMobileMenuOpen ? "gw-card w-fit" : "",
-                                "relative flex flex-row items-center justify-end",
-                            )}
-                            style={{
-                                left: 0,
-                                right: 18,
-                                bottom: 0, // atau top: 16 sesuai posisi awal kamu
-                            }}
+      className={cn(
+        "relative flex items-center overflow-visible px-2 py-2",
+        isMobileMenuOpen ? "rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.25)] w-64 justify-end" : ""
+      )}
                             whileDrag={{ scale: 1.05 }}
                         >
                             {/* Menu muncul absolute, sejajar toggle */}
@@ -162,9 +160,8 @@ export default function NavigationBar() {
                                     })}
                                 </div>
                             </MobileNavMenu>
-
-                            {/* Toggle selalu di kanan, z lebih tinggi */}
-                            <MobileNavHeader className="relative z-50 items-center justify-end">
+                                                                {/* Toggle selalu di kanan, z lebih tinggi */}
+                            <MobileNavHeader className="relative z-50">
                                 <MobileNavToggle
                                     isOpen={isMobileMenuOpen}
                                     onClick={() => {
@@ -172,7 +169,6 @@ export default function NavigationBar() {
                                     }}
                                 />
                             </MobileNavHeader>
-
                         </motion.div>
                     </MobileNav>
                     {/* <MobileNav isShrunk={isShrunk}>
