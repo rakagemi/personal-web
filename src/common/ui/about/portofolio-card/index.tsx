@@ -63,9 +63,11 @@ export function PortfolioCard({ company }: { company: PortfolioCompany }) {
                   <div className="relative flex flex-row items-center gap-2 mb-4">
                     <div className="relative z-20 h-10 w-10 overflow-hidden rounded-xl shadow-lg border-white/10 bg-white/5 p-2 backdrop-blur-md">
                       <Image
+                        priority
                         src={getCompanyImage}
                         alt="Company Logo"
                         fill
+                        loading="eager"
                         sizes="100svh"
                         className="object-cover"
                       />
@@ -102,6 +104,7 @@ export function PortfolioCard({ company }: { company: PortfolioCompany }) {
                     >
                       <Image
                         loading="eager"
+                        priority
                         src={getAssetImage}
                         alt={asset.alt}
                         width={400}

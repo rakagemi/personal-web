@@ -72,6 +72,8 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
                                         src={getCompanyImage}
                                         alt="Company Logo"
                                         fill
+                                        loading="eager"
+                                        priority
                                         sizes="100svh"
                                         className="object-cover"
                                     />

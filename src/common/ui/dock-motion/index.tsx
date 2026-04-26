@@ -110,6 +110,8 @@ function DockIcon({
                                     className="relative z-10 flex h-full w-full items-center justify-center"
                                 >
                                     <Image
+                                        priority
+                                        loading="eager"
                                         src={link.image_colour || link.image}
                                         alt={link.name}
                                         width={30}
