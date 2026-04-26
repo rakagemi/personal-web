@@ -1,4 +1,4 @@
-const ALL_FLAIR_IMAGES = [
+export const ALL_FLAIR_IMAGES = [
     "https://assets.codepen.io/16327/Revised+Flair.png",
     "https://assets.codepen.io/16327/Revised+Flair-1.png",
     "https://assets.codepen.io/16327/Revised+Flair-2.png",

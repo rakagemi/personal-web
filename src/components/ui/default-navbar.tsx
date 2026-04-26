@@ -77,7 +77,7 @@ export const Navbar = ({
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(
-            child as React.ReactElement<{  delay?: number }>,
+            child as React.ReactElement<{ delay?: number }>,
             { delay }
           )
           : child
@@ -130,7 +130,7 @@ export const NavItems = ({ items, className, onItemClick, isShrunk }: NavItemsPr
         className
       )}
     >
-        {/* {!isShrunk && NavNotShrunk.map((item, idx) => (
+      {/* {!isShrunk && NavNotShrunk.map((item, idx) => (
                     <Link
             onMouseEnter={() => setHovered(idx)}
             onClick={(e) => onItemClick && onItemClick(e, item)}
@@ -144,26 +144,26 @@ export const NavItems = ({ items, className, onItemClick, isShrunk }: NavItemsPr
              {item.icon}
           </Link>
         ))} */}
-        {items.map((item, idx) => (
-          <Link
-            onMouseEnter={() => setHovered(idx)}
-            onClick={(e) => onItemClick && onItemClick(e, item)}
-            className={cn(
-              "relative px-4 py-2 dark:text-white text-black hover:text-white cursor-pointer",
-              isShrunk ? "" : "gw-btn rounded-full"
-            )}
-            key={`link-${idx}`}
-            href={item.link}
-          >
-            {hovered === idx && (
-              <motion.div
-                layoutId="hovered-default"
-                className="absolute inset-0 h-full w-full rounded-full bg-blue-500 dark:bg-neutral-800"
-              />
-            )}
-            <span className="relative z-20">{item.name}</span>
-          </Link>
-        ))}
+      {items.map((item, idx) => (
+        <Link
+          onMouseEnter={() => setHovered(idx)}
+          onClick={(e) => onItemClick && onItemClick(e, item)}
+          className={cn(
+            "relative px-4 py-2 dark:text-white text-black hover:text-white cursor-pointer",
+            isShrunk ? "" : "gw-btn rounded-full"
+          )}
+          key={`link-${idx}`}
+          href={item.link}
+        >
+          {hovered === idx && (
+            <motion.div
+              layoutId="hovered-default"
+              className="absolute inset-0 h-full w-full rounded-full bg-blue-500 dark:bg-neutral-800"
+            />
+          )}
+          <span className="relative z-20">{item.name}</span>
+        </Link>
+      ))}
     </motion.div>
   );
 };
@@ -219,17 +219,13 @@ export const MobileNavMenu = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ delay }}
           className={cn(
-            // "relative z-50 mx-auto flex flex-col items-center justify-between px-0 py-2 lg:hidden border transition-colors duration-300",
-            // "bg-transparent border-transparent",
-            "relative z-50 px-2 items-center justify-end border transition-colors duration-300",
-            "bg-transparent border-transparent",
-            className
+            "absolute right-[calc(100%+10px)] -translate-x-16 inset-2"
           )}
+          initial={{ opacity: 0, x: 16, scale: 0.95 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          exit={{ opacity: 0, x: 16, scale: 0.95 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
         >
           {children}
         </motion.div>
@@ -246,12 +242,66 @@ export const MobileNavToggle = ({
   onClick: () => void;
 }) => {
   return isOpen ? (
-    <div className="gw-btn-icon rounded-full">
-      <IconX className="dark:text-white text-neutral-800" onClick={onClick} />
+    <div onClick={onClick} className="gw-btn-icon relative overflow-hidden rounded-full bg-black/25 hover:bg-black/45 flex items-center justify-center border border-white/20 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95">
+      {/* Ring luar — gelap */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, transparent 47%, rgba(20,22,28,0.65) 52%, rgba(15,17,22,0.55) 100%)",
+        }}
+      />
+
+      {/* Ring dalam — abu-abu terang dengan gradasi ke tengah */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, transparent 34%, rgba(180,183,188,0.55) 38%, rgba(110,113,118,0.45) 48%, transparent 52%)",
+        }}
+      />
+
+      {/* Highlight tipis di bagian atas ring (efek cahaya) */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 20%, rgba(255,255,255,0.12) 0%, transparent 60%)",
+        }}
+      />
+      {/* Circle tengah */}
+      <div className="w-5 h-5 bg-white rounded-full z-10 shadow-[0_0_8px_2px_rgba(255,255,255,0.4)]" />
     </div>
   ) : (
-    <div className="gw-btn-icon rounded-full">
-      <ListIndentDecrease className="dark:text-white text-neutral-800" onClick={onClick} />
+    <div onClick={onClick} className="gw-btn-icon relative overflow-hidden rounded-full bg-black/25 hover:bg-black/45 flex items-center justify-center border border-white/20 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95">
+      {/* Ring luar — gelap */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, transparent 47%, rgba(20,22,28,0.65) 52%, rgba(15,17,22,0.55) 100%)",
+        }}
+      />
+
+      {/* Ring dalam — abu-abu terang dengan gradasi ke tengah */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, transparent 34%, rgba(180,183,188,0.55) 38%, rgba(110,113,118,0.45) 48%, transparent 52%)",
+        }}
+      />
+
+      {/* Highlight tipis di bagian atas ring (efek cahaya) */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 20%, rgba(255,255,255,0.12) 0%, transparent 60%)",
+        }}
+      />
+      {/* Circle tengah */}
+      <div className="w-5 h-5 bg-white rounded-full z-10 shadow-[0_0_8px_2px_rgba(255,255,255,0.4)]" />
     </div>
   );
 };
