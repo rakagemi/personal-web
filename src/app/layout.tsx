@@ -47,7 +47,6 @@ const Body = ({ children }: { children: React.ReactNode }) => {
       <ThemeProvider enableSystem attribute="class" defaultTheme="dark">
         <Toaster />
         <NavigationBar />
-        <LayoutAOD>
         <SmoothScrollProvider>
           <TooltipProvider>
             {children}
@@ -55,7 +54,6 @@ const Body = ({ children }: { children: React.ReactNode }) => {
             <GoogleAnalytics gaId={CLIENT_ENV.googleAnalyticsID || ""} />
           </TooltipProvider>
         </SmoothScrollProvider>
-        </LayoutAOD>
       </ThemeProvider>
     </body>
   )

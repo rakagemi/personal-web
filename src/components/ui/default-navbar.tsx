@@ -313,6 +313,7 @@ export const NavbarLogo = ({ theme }: { theme: string }) => {
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black dark:text-white"
     >
       <Image
+      priority
         src={"/favicon.svg"}
         width={30}
         height={30}

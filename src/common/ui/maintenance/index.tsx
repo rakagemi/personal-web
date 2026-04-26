@@ -59,7 +59,7 @@ export default function Maintenance() {
                                 shadow-[0_12px_40px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.08)]
                                 backdrop-blur-2xl backdrop-saturate-150"
                             >
-                                <Image src="/assets/image/unnamed.jpg" loading="eager" className="object-cover" width={80} height={80} alt="logo" />
+                                <Image src="/assets/image/unnamed.jpg" loading="eager" priority className="object-cover" width={80} height={80} alt="logo" />
                             </div>
                             <motion.div
                                 animate={{ y: [-5, 5, -5], opacity: [0.5, 1, 0.5] }}

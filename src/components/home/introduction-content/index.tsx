@@ -145,9 +145,11 @@ export default function IntroductionContent() {
                 <div className="flex items-center justify-center gap-2 pt-2 md:gap-4 md:pt-0">
                     <div className="h-auto w-5 shrink-0 sm:w-7">
                         <Image
+                            priority
                             src={"/assets/icon/white-curly-bracket.svg"}
                             width={30}
                             height={30}
+                            loading="eager"
                             alt="curly-brackets"
                             style={{ width: "auto", height: "auto" }}
                         />
@@ -159,6 +161,8 @@ export default function IntroductionContent() {
 
                     <div className="h-auto w-5 shrink-0 rotate-180 sm:w-7">
                         <Image
+                            priority
+                            loading="eager"
                             src={"/assets/icon/white-curly-bracket.svg"}
                             width={30}
                             height={30}
