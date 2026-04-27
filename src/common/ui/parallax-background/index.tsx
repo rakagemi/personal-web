@@ -2,7 +2,7 @@
 
 import { useIsMobile } from "@/hooks/use-detect-mobile";
 import { useEffect, useRef, useState, useCallback } from "react";
-import * as THREE from "three";
+import { Mesh, PlaneGeometry, ShaderMaterial, Texture } from "three";
 
 interface ParallaxImageProps {
   imageUrl: string;
@@ -16,6 +16,8 @@ interface ParallaxImageProps {
 }
 
 type GyroStatus = "idle" | "pending" | "granted" | "denied" | "unsupported";
+
+const THREE = await import('three')
 
 export default function ParallaxImage({
   imageUrl,
@@ -162,10 +164,10 @@ export default function ParallaxImage({
     });
     mount.appendChild(renderer.domElement);
 
-    let mesh: THREE.Mesh | null = null;
-    let material: THREE.ShaderMaterial | null = null;
-    let geometry: THREE.PlaneGeometry | null = null;
-    let texture: THREE.Texture | null = null;
+    let mesh: Mesh | null = null;
+    let material: ShaderMaterial | null = null;
+    let geometry: PlaneGeometry | null = null;
+    let texture: Texture | null = null;
     let raf = 0;
 
     const targetMouse = new THREE.Vector2(0, 0);

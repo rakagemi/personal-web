@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
+
 export default function IntroductionContent() {
     const introductionTitleRef = useRef<HTMLDivElement | null>(null);
 
