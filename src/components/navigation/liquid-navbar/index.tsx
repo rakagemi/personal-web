@@ -23,6 +23,7 @@ import {
     motion,
     AnimatePresence,
 } from "motion/react";
+import { useActiveLink } from "@/hooks/use-link-active";
 
 type ThemeToggleButtonProps = {
     theme: string | undefined;
@@ -56,6 +57,7 @@ export default function NavigationBar() {
     const isDragging = useRef(false);
     const x = useMotionValue(0);
     const y = useMotionValue(0);
+    const isActive = useActiveLink(pathname);
 
 
     const { scrollY } = useScroll();
@@ -109,10 +111,10 @@ export default function NavigationBar() {
                             dragElastic={0.1}
                             dragConstraints={constraintsRef}
                             onDragEnd={() => { setTimeout(() => { isDragging.current = false; }, 100); }}
-      className={cn(
-        "relative flex items-center overflow-visible px-2 py-2",
-        isMobileMenuOpen ? "rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.25)] w-64 justify-end" : ""
-      )}
+                            className={cn(
+                                "relative flex items-center overflow-visible px-2 py-2",
+                                isMobileMenuOpen ? "rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.25)] w-64 justify-end" : ""
+                            )}
                             whileDrag={{ scale: 1.05 }}
                         >
                             {/* Menu muncul absolute, sejajar toggle */}
@@ -123,7 +125,6 @@ export default function NavigationBar() {
                                 <div className="flex flex-row gap-3 items-center justify-end">
                                     {NAV_ITEMS.map((item, index) => {
                                         const Icon = item.icon;
-                                        const isActive = pathname === item.link;
                                         return (
                                             <motion.div
                                                 key={item.name}
@@ -141,16 +142,16 @@ export default function NavigationBar() {
                                                         "transition-colors duration-500",
                                                         item.mobile_hover_background_color,
                                                         item.mobile_hover_border_color,
-                                                        isActive && item.mobile_background_color_active,
-                                                        isActive && item.mobile_border_color_active,
-                                                        isActive && "shadow-none! border-none!",
+                                                        isActive(item.link) && item.mobile_background_color_active,
+                                                        isActive(item.link) && item.mobile_border_color_active,
+                                                        isActive(item.link) && "shadow-none! border-none!",
                                                     )}
                                                     href={item.link}
                                                 >
                                                     <Icon
                                                         className={cn(
                                                             "text-white",
-                                                            isActive && "text-white! transition-colors duration-300",
+                                                            isActive(item.link) && "text-white! transition-colors duration-300",
                                                         )}
                                                         size={20}
                                                     />
@@ -160,7 +161,7 @@ export default function NavigationBar() {
                                     })}
                                 </div>
                             </MobileNavMenu>
-                                                                {/* Toggle selalu di kanan, z lebih tinggi */}
+                            {/* Toggle selalu di kanan, z lebih tinggi */}
                             <MobileNavHeader className="relative z-50">
                                 <MobileNavToggle
                                     isOpen={isMobileMenuOpen}

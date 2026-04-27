@@ -1,15 +1,23 @@
-'use client';
+'use client'
 
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import { SlideInButton } from "@/components/SlideInButton";
 import { SOCIAL_LINKS } from "@/common/constants/social-media";
-import BackgroundSection from "@/common/ui/background";
 import { LiquidGlassCard } from "@/common/ui/card-liquid-glass";
 import ExpertiseContent from "@/components/home/expertise";
 import DockMotion from "@/common/ui/dock-motion";
-import Footer from "@/common/ui/footer";
-import IntroductionContent from "@/components/home/introduction-content";
+import dynamic from "next/dynamic";
+
+const BackgroundSection = dynamic(() => import('@/common/ui/background'), {
+  ssr: false,
+});
+const IntroductionSection = dynamic(() => import('@/components/home/introduction-content'), {
+  ssr: false,
+})
+const FooterSection = dynamic(() => import('@/common/ui/footer'), {
+  ssr: false,
+});
 
 export default function HomeMainContent() {
     const handleDownloadResume = () => {
@@ -41,7 +49,7 @@ export default function HomeMainContent() {
                                     transition={{ duration: 0.8, delay: 1 + 0.2 }}
                                     className=""
                                 >
-                                    <IntroductionContent />
+                                    <IntroductionSection />
                                 </motion.div>
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
@@ -76,7 +84,7 @@ export default function HomeMainContent() {
                         </LiquidGlassCard>
                     </div>
                 </section>
-                <Footer />
+                <FooterSection />
             </main>
         </div>
     );

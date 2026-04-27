@@ -1,3 +1,5 @@
+'use client'
+
 import { useRef } from "react";
 import { IconMail, IconMapPin } from "@tabler/icons-react";
 import gsap from "gsap";
@@ -7,7 +9,7 @@ import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrambleTextPlugin);
 
-export function ContactInfoContent({ }) {
+export default function ContactInfoContent({ }) {
     const contactInfoRef = useRef<HTMLDivElement | null>(null);
 
     useGSAP(

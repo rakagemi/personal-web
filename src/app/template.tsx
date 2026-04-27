@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import * as THREE from "three";
 
+const THREE = await import('three')
 const SESSION_KEY = "intro_played";
 
 export default function Template({ children }: { children: React.ReactNode }) {

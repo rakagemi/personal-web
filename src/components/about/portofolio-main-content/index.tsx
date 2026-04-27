@@ -13,10 +13,9 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { getFallbackImage } from "@/utils";
-import ScrollHighlightText from "@/components/scroll-highlight-text";
 import InfiniteCard from "@/components/infinite-card";
 import { RayaTechStack } from "@/common/constants/tech-stack/raya";
-import ParticleBackground from "@/common/ui/particle-background";
+import dynamic from "next/dynamic";
 
 const emptySubscribe = () => () => { };
 
@@ -28,18 +27,30 @@ function useMounted() {
     );
 }
 
+const Loading = dynamic(() => import('@/components/loading'), {
+  ssr: false
+})
+
+const KeyReponsiblityScrollHighLight = dynamic(() => import('@/components/scroll-highlight-text'), {
+  ssr: false,
+})
+
+const ParticleBackgroundSection = dynamic(() => import('@/common/ui/particle-background'), {
+  ssr: false
+})
+
 export function PortofolioMainContent({ company }: { company: PortfolioCompany }) {
     const { resolvedTheme } = useTheme();
     const mounted = useMounted();
     const isDark = resolvedTheme === "dark";
 
-    if (!mounted) return null;
+    if (!mounted) return <Loading text="Loading..." />;
 
     const getCompanyImage = (isDark ? company.image_dark_url : company.image_url)?.trim() || getFallbackImage;
     return (
         <div id={`portfolio-${company.name}`}>
             <main className="min-h-screen relative bg-neutral-100 dark:bg-neutral-900">
-                <ParticleBackground />
+                <ParticleBackgroundSection />
                 <article className="relative mx-auto max-w-7xl pt-10 md:pt-20 px-6 py-20 md:px-10">
                     {/* header card */}
                     <header className="gw-card mb-12 rounded-[32px] border border-black/10 dark:border-white/10 p-6 md:p-10">
@@ -126,7 +137,7 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
                                                 {item}
                                             </li>
                                         ))} */}
-                                    <ScrollHighlightText
+                                    <KeyReponsiblityScrollHighLight
                                         type="list"
                                         items={company.key_responsibilities}
                                         initialColor={isDark ? 'text-black/70' : '#FFFF'}

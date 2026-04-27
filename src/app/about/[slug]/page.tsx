@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PortfolioDetailPage({ params }: { params: Promise<{ slug: string }>}) {
+export default async function AboutDetailPage({ params }: { params: Promise<{ slug: string }>}) {
   const { slug } = await params;
   const company = portfolioCompanies.find((item) => item.slug === slug);
   if (!company) return notFound();

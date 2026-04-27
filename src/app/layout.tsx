@@ -51,7 +51,6 @@ const Body = ({ children }: { children: React.ReactNode }) => {
           <TooltipProvider>
             {children}
             <GoogleTagManager gtmId={CLIENT_ENV.googleTagManagerID || ""} />
-            <GoogleAnalytics gaId={CLIENT_ENV.googleAnalyticsID || ""} />
           </TooltipProvider>
         </SmoothScrollProvider>
       </ThemeProvider>
