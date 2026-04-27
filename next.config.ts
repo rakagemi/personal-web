@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
+import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  reactStrictMode: true,
   allowedDevOrigins: [process.env.MOBILE_DEV_IP ?? ""],
   images: {
     qualities: [75, 100],
@@ -27,4 +29,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})(nextConfig);
