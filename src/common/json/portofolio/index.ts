@@ -23,6 +23,15 @@ export const portfolioCompanies: PortfolioCompany[] = [
     image_url:"/assets/ibm/light-ibm.png",
     image_dark_url: "/assets/ibm/dark-ibm.svg",
     created_at: "2023-08-01",
+    project_overview:"",
+    project_team: [
+      "Ahmad Yulia Rizky Fahmi",
+      "Yusuf Ashari",
+      "Muhammad Rifqy",
+      "Ali Ridho",
+      "Dwi Gunardi",
+      "Rony Ardianto"
+    ],
     assets: [
       {
         id: "839495f8-b0fa-4d6a-bcd1-eed971865f50",
@@ -136,6 +145,11 @@ export const portfolioCompanies: PortfolioCompany[] = [
     image_url:"/assets/established-jakarta/estb-logo.ico",
     image_dark_url: "/assets/established-jakarta/estb-logo.ico",
     created_at: "2023-01-01T00:00:00.000Z",
+    project_overview:"",
+    project_team: [
+      "R Andika",
+      "Muhammad Khotib",
+    ],
     assets: [
       {
         id: "792261d0-82dc-4747-8a97-b93f8fdff6d7",
@@ -201,15 +215,20 @@ export const portfolioCompanies: PortfolioCompany[] = [
     role: "Software Engineer",
     period: "Dec 2021 — Now",
     location: "Jakarta Selatan, Indonesia",
-    summary: "Self Service",
+    summary: "Full-Stack Software Engineer | Website Development & Server Migration",
     description:
       "According to the patient's case",
     key_responsibilities: [
-      "Self Service",
+      "Custom Website Development (HTML/CSS/JS, Next.js/React.js, Nuxt.js/Vue.js, Svelte, Python/Django/Flask, PHP/Laravel, and based on the case as needed)",
+      "Server Migration & Deployment (Vercel, Railway, PythonAnywhere, AWS, DigitalOcean, GoDaddy, and based on the case as needed)",
+      "ML Model Integration (TensorFlow LSTM, NLTK NLP)",
+      "DevOps Automation (GitHub Actions, CI/CD, Docker)"
     ],
     image_url:"/assets/self-employe.jpeg",
     image_dark_url:"/assets/self-employe.jpeg",
     created_at: "2023-01-01T00:00:00.000Z",
+    project_overview:"",
+    project_team: [],
     assets: [
       {
         id: "792261d0-82dc-4747-8a97-b93f8fdff6d7",
@@ -231,7 +250,7 @@ export const portfolioCompanies: PortfolioCompany[] = [
         title: "DCI Indonesia Annual Report",
         description: "DCI Indonesia is proud to announce that it is now a Certified B Corporation, the first data center colocation company in Asia to achieve the certification.",
         tags: ["Development", "Next.js", "Emotion", "Docker", "Nginx", "Typescript", "Amazon Web Service"],
-        url: "https://dci-indonesia.com/annual-report/2023",
+        url: "#",
       },
       {
         id: "cdc803f6-1851-476b-8c46-3bfc553c2fbc",
@@ -242,7 +261,39 @@ export const portfolioCompanies: PortfolioCompany[] = [
         title: "Yayasan Cerah Indonesia",
         description: "Yayasan Indonesia Cerah also known as CERAH is an Indonesian non-profit organization working to advance the energy transition policy agenda in Indonesia.",
         tags: ["Development", "Next.js", "Emotion", "laravel", "Docker", "Nginx", "Typescript", "Amazon Web Service"],
-        url: "#",
+        url: "https://www.cerah.or.id/",
+      },
+    ],
+  },
+  {
+    id: "4fd1b397-bdd8-4e14-9658-e2933e143c68",
+    slug: "fun-project",
+    name: "Fun Project",
+    role: "whatever I want",
+    period: "Now",
+    location: "Jakarta Selatan, Indonesia",
+    summary: "Web Application | Data Science | AI/ML | Data Engineer",
+    description:
+      "Guess What?",
+    key_responsibilities: [
+      "Self Service",
+    ],
+    image_url:"/assets/self-employe.jpeg",
+    image_dark_url:"/assets/hc-cat.jpg",
+    created_at: "2023-01-01T00:00:00.000Z",
+    project_overview:"",
+    project_team: [],
+    assets: [
+      {
+        id: "8cb89a6e-f7fb-4291-b7d4-f1cbc121497c",
+        company_id:"raak-fun-1",
+        company_name:"Fun Project",
+        src: "/assets/freelance/tugasakhir.jpg",
+        alt: "Implementasi Long Short-Term Memory untuk Identifikasi Berita Hoax Berbahasa Inggris pada Media Sosial",
+        title: "Implementasi Long Short-Term Memory untuk Identifikasi Berita Hoax Berbahasa Inggris pada Media Sosial",
+        description: "This is project implementation Long Short-Term Memory untuk Identifikasi Berita Hoax Berbahasa Inggris pada Media Sosial.",
+        tags: ["Python", "Flask", "Deep Learning", "Machine Learning", "NLP", "TensorFlow", "Keras", "Long-Short Term Memory"],
+        url: "https://github.com/rakagemi/IDENTIFYING-HOAX-NEWS"
       },
     ],
   }

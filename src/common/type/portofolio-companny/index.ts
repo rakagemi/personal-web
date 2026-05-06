@@ -13,5 +13,7 @@ export type PortfolioCompany = {
     image_url: string;
     image_dark_url: string;
     created_at: string;
+    project_overview: string,
+    project_team: string[],
     assets: PortfolioAsset[];
 };

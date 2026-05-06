@@ -10,7 +10,7 @@ import {
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/default-navbar";
-import { useMotionValue, useMotionValueEvent, useScroll } from "motion/react";
+import { motion, useMotionValue, useMotionValueEvent, useScroll, AnimatePresence } from "motion/react";
 import { useState, useRef } from "react";
 import { useLenis } from "lenis/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -19,11 +19,8 @@ import { LGIcon } from "@/common/ui/icon/liquid-glass";
 import { ThemeToggleContainer } from "@/common/ui/mobile-nav-toogle-theme";
 import { cn } from "@/utils";
 import { CLIENT_ENV } from "@/utils/environment/client";
-import {
-    motion,
-    AnimatePresence,
-} from "motion/react";
 import { useActiveLink } from "@/hooks/use-link-active";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 type ThemeToggleButtonProps = {
     theme: string | undefined;
@@ -123,42 +120,60 @@ export default function NavigationBar() {
                                 onClose={() => setIsMobileMenuOpen(false)}
                             >
                                 <div className="flex flex-row gap-3 items-center justify-end">
-                                    {NAV_ITEMS.map((item, index) => {
-                                        const Icon = item.icon;
-                                        return (
-                                            <motion.div
-                                                key={item.name}
-                                                initial={{ opacity: 0, x: 20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                exit={{ opacity: 0, x: 20 }}
-                                                transition={{
-                                                    duration: 0.25,
-                                                    delay: index * 0.05, // stagger per icon
-                                                    ease: "easeOut",
-                                                }}
-                                            >
-                                                <LGIcon
-                                                    className={cn(
-                                                        "transition-colors duration-500",
-                                                        item.mobile_hover_background_color,
-                                                        item.mobile_hover_border_color,
-                                                        isActive(item.link) && item.mobile_background_color_active,
-                                                        isActive(item.link) && item.mobile_border_color_active,
-                                                        isActive(item.link) && "shadow-none! border-none!",
-                                                    )}
-                                                    href={item.link}
+                                    <Tooltip.Provider delayDuration={0}>
+                                        {NAV_ITEMS.map((item, index) => {
+                                            const Icon = item.icon;
+                                            return (
+                                                <motion.div
+                                                    key={item.name}
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: 20 }}
+                                                    transition={{
+                                                        duration: 0.25,
+                                                        delay: index * 0.05, // stagger per icon
+                                                        ease: "easeOut",
+                                                    }}
                                                 >
-                                                    <Icon
-                                                        className={cn(
-                                                            "text-white",
-                                                            isActive(item.link) && "text-white! transition-colors duration-300",
-                                                        )}
-                                                        size={20}
-                                                    />
-                                                </LGIcon>
-                                            </motion.div>
-                                        );
-                                    })}
+                                                    <Tooltip.Root>
+                                                        <Tooltip.Trigger asChild>
+                                                            <span className="inline-block">
+                                                            <LGIcon
+                                                                className={cn(
+                                                                    "transition-colors duration-500",
+                                                                    item.mobile_hover_background_color,
+                                                                    item.mobile_hover_border_color,
+                                                                    isActive(item.link) && item.mobile_background_color_active,
+                                                                    isActive(item.link) && item.mobile_border_color_active,
+                                                                    isActive(item.link) && "shadow-none! border-none!",
+                                                                )}
+                                                                href={item.link}
+                                                            >
+                                                                <Icon
+                                                                    className={cn(
+                                                                        "text-white",
+                                                                        isActive(item.link) && "text-white! transition-colors duration-300",
+                                                                    )}
+                                                                    size={20}
+                                                                />
+                                                            </LGIcon>
+                                                            </span>
+                                                        </Tooltip.Trigger>
+                                                        <Tooltip.Portal>
+                                                            <Tooltip.Content
+                                                                side="top"
+                                                                sideOffset={12}
+                                                                className="z-50 rounded-xl border border-white/15 bg-neutral-900/90 px-3 py-1.5 text-xs font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-md"
+                                                            >
+                                                                {item.name}
+                                                                <Tooltip.Arrow className="fill-neutral-900/90" />
+                                                            </Tooltip.Content>
+                                                        </Tooltip.Portal>
+                                                    </Tooltip.Root>
+                                                </motion.div>
+                                            );
+                                        })}
+                                    </Tooltip.Provider>
                                 </div>
                             </MobileNavMenu>
                             {/* Toggle selalu di kanan, z lebih tinggi */}
