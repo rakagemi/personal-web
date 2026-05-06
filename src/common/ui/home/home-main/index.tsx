@@ -37,7 +37,7 @@ export default function HomeMainContent() {
                 <BackgroundSection
                     opacity={"100"}
                     backgroundImage={"/assets/home/dark-bg-section.jpg"}
-                    animationMode="initial-only"
+                    animationMode="always"
                 />
                 <section className="relative w-full min-h-screen overflow-hidden flex items-center">
                     <div className="relative z-10 container mx-auto px-6 md:px-10 pt-30 md:pt-20 pb-40 max-w-7xl w-full">

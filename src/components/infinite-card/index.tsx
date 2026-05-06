@@ -65,12 +65,12 @@ export default function InfiniteCard({
                     <div
                         key={`${item.id}-${i}`}
 
-                        className="gw-badge flex shrink-0 items-center justify-center gap-2 rounded-full px-5 py-2.5 transition-colors cursor-default border border-white/20 dark:border-white/10 duration-300 ease-out"
+                        className="gw-badge flex shrink-0 items-center justify-center gap-2 rounded-full px-5 py-2.5 transition-colors cursor-default border border-white/10 duration-300 ease-out"
                     >
                         <span className="flex items-center justify-center text-xl">
                             {item.icon}
                         </span>
-                        <span className="text-sm font-medium text-neutral-800 dark:text-neutral-300">
+                        <span className="text-sm font-medium text-neutral-300">
                             {item.name}
                         </span>
                     </div>

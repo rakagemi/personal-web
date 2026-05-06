@@ -14,29 +14,21 @@ import { CLIENT_ENV } from "@/utils/environment/client";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: true,
 });
+
 
 export const metadata = siteMetadata;
 
 const Head = () => {
   return (
-    <head>
-      <link rel="icon" href="favicon.png" sizes="any" className="rounded-full" />
-      <link
-        rel="apple-touch-icon"
-        href="/assets/favicon/apple-icon?<generated>"
-        type="image/png"
-        sizes="sizes=180x180"
-      />
-      <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
-      <link rel="manifest" href="site.webmanifest" />
-    </head>
+    <head></head>
   )
 }
 
@@ -50,6 +42,7 @@ const Body = ({ children }: { children: React.ReactNode }) => {
         <SmoothScrollProvider>
           <TooltipProvider>
             {children}
+            <GoogleAnalytics gaId={CLIENT_ENV.googleAnalyticsID || ""} />
             <GoogleTagManager gtmId={CLIENT_ENV.googleTagManagerID || ""} />
           </TooltipProvider>
         </SmoothScrollProvider>

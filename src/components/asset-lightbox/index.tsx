@@ -1,9 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Minimize2, Maximize2 } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Minimize2, Maximize2, Link2 } from "lucide-react";
 import { useState } from "react";
 import type { PortfolioAsset } from "@/common/type/portofolio-asset";
+import Link from "next/link";
 
 type Props = {
   assets: PortfolioAsset[];
@@ -117,17 +118,22 @@ export function AssetLightbox({
               transition={{ duration: 0.28, ease: "easeOut" }}
               className="pointer-events-none absolute bottom-5 left-1/2 z-20 w-full max-w-2xl -translate-x-1/2 px-4"
             >
-              <section className="pointer-events-auto rounded-[28px] border border-white/10 dark:border-black/10 bg-white/50 dark:bg-black/50 p-5 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition hover:bg-white/75 hover:dark:bg-black/75">
-                <h2 className="text-lg font-medium text-black dark:text-white">{asset.title}</h2>
-                <p className="mt-2 text-sm leading-6 text-black/75 dark:text-white/75">
-                  {asset.description}
+              <section className="pointer-events-auto rounded-[28px] border border-black/10 bg-black/50 p-5 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition hover:bg-black/75">
+                <h2 className="text-lg font-medium text-white">{asset.title}</h2>
+                <p className="mt-2 text-sm leading-6 text-white/75 flex items-center gap-2">
+                  <span>{asset.description}</span>
+                  {!asset.url || ['','#' ].includes(asset.url) ? null : (
+                    <Link href={asset.url} target="_blank" rel="noopener noreferrer">
+                      <Link2 size={16} className="text-white/50 hover:text-white cursor-pointer shrink-0" />
+                    </Link>
+                  )}
                 </p>
 
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {asset.tags.map((tag: string) => (
                     <li
                       key={tag}
-                      className="rounded-full border border-white/10 dark:border-black/10 px-3 py-1 text-xs text-blue-600 dark:text-blue-300"
+                      className="rounded-full border border-black/10 px-3 py-1 text-xs text-blue-300"
                     >
                       {tag}
                     </li>

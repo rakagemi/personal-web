@@ -2,10 +2,8 @@
 
 import { PortfolioCompany } from "@/common/type/portofolio-companny";
 import { AssetGallery } from "@/components/asset-galery";
-import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { useSyncExternalStore } from "react";
 import {
     Accordion,
     AccordionContent,
@@ -16,16 +14,6 @@ import { getFallbackImage } from "@/utils";
 import InfiniteCard from "@/components/infinite-card";
 import { RayaTechStack } from "@/common/constants/tech-stack/raya";
 import dynamic from "next/dynamic";
-
-const emptySubscribe = () => () => { };
-
-function useMounted() {
-    return useSyncExternalStore(
-        emptySubscribe,
-        () => true,
-        () => false,
-    );
-}
 
 const Loading = dynamic(() => import('@/components/loading'), {
   ssr: false
@@ -40,21 +28,18 @@ const ParticleBackgroundSection = dynamic(() => import('@/common/ui/particle-bac
 })
 
 export function PortofolioMainContent({ company }: { company: PortfolioCompany }) {
-    const { resolvedTheme } = useTheme();
-    const mounted = useMounted();
-    const isDark = resolvedTheme === "dark";
 
-    if (!mounted) return <Loading text="Loading..." />;
+    if (!company) return <Loading text="Loading..." />;
 
-    const getCompanyImage = (isDark ? company.image_dark_url : company.image_url)?.trim() || getFallbackImage;
+    const getCompanyImage = company.image_dark_url || getFallbackImage;
     return (
         <div id={`portfolio-${company.name}`}>
-            <main className="min-h-screen relative bg-neutral-100 dark:bg-neutral-900">
+            <main className="min-h-screen relative bg-neutral-900">
                 <ParticleBackgroundSection />
                 <article className="relative mx-auto max-w-7xl pt-10 md:pt-20 px-6 py-20 md:px-10">
                     {/* header card */}
-                    <header className="gw-card mb-12 rounded-[32px] border border-black/10 dark:border-white/10 p-6 md:p-10">
-                        <nav aria-label="Breadcrumb" className="mb-3 md:mb-6 text-[12px] sm:text-sm text-black/50 dark:text-white/50">
+                    <header className="gw-card mb-12 rounded-[32px] border border-white/10 p-6 md:p-10">
+                        <nav aria-label="Breadcrumb" className="mb-3 md:mb-6 text-[12px] sm:text-sm text-white/50">
                             <ol className="flex items-center gap-2">
                                 <li><Link href="/">Home</Link></li>
                                 <li>/</li>
@@ -69,15 +54,15 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
                                 <p className="mb-3 text-[13px] sm:text-sm uppercase tracking-[0.2em] text-blue-400">
                                     {company.role}
                                 </p>
-                                <h1 className="text-2xl sm:text-4xl font-semibold text-black dark:text-white tracking-tight md:text-5xl">
+                                <h1 className="text-2xl sm:text-4xl font-semibold text-white tracking-tight md:text-5xl">
                                     {company.name}
                                 </h1>
-                                <p className="mt-5 max-w-2xl text-sm leading-7 text-black/70 dark:text-white/70 md:text-base">
+                                <p className="mt-5 max-w-2xl text-sm leading-7 text-white/70 md:text-base">
                                     {company.description}
                                 </p>
                             </section>
                             {/* side card */}
-                            <aside className="relative gw-badge overflow-hidden h-fit rounded-[24px] border border-black/10 dark:border-white/10 p-5">
+                            <aside className="relative gw-badge overflow-hidden h-fit rounded-[24px] border border-white/10 p-5">
                                 <div className="absolute right-4 top-4 z-20 h-22 w-22 overflow-hidden rounded-xl shadow-lg border-white/10 bg-white/5 p-2 backdrop-blur-md">
                                     <Image
                                         src={getCompanyImage}
@@ -92,16 +77,16 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
 
                                 <dl className="relative z-10 space-y-4 text-sm pr-14">
                                     <div>
-                                        <dt className="text-black/45 dark:text-white/45">Periode</dt>
-                                        <dd className="mt-1 text-black dark:text-white">{company.period}</dd>
+                                        <dt className="text-white/45">Periode</dt>
+                                        <dd className="mt-1 text-white">{company.period}</dd>
                                     </div>
                                     <div>
-                                        <dt className="text-black/45 dark:text-white/45">Lokasi</dt>
-                                        <dd className="mt-1 text-black dark:text-white">{company.location}</dd>
+                                        <dt className="text-white/45">Lokasi</dt>
+                                        <dd className="mt-1 text-white">{company.location}</dd>
                                     </div>
                                     <div>
-                                        <dt className="text-black/45 dark:text-white/45">Assets</dt>
-                                        <dd className="mt-1 text-black dark:text-white">{company.assets.length} items</dd>
+                                        <dt className="text-white/45">Assets</dt>
+                                        <dd className="mt-1 text-white">{company.assets.length} items</dd>
                                     </div>
                                 </dl>
                             </aside>
@@ -140,8 +125,8 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
                                     <KeyReponsiblityScrollHighLight
                                         type="list"
                                         items={company.key_responsibilities}
-                                        initialColor={isDark ? 'text-black/70' : '#FFFF'}
-                                        finalColor={isDark ? 'text-white/70' : '#0a0a0a'}
+                                        initialColor={'text-black/70'}
+                                        finalColor={'text-white/70'}
                                         className="text-sm md:text-base"
                                         stagger={0.3}
                                     />
@@ -169,7 +154,7 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
                     {/* ASSET GALLERY */}
                     <section aria-labelledby="asset-gallery">
                         <div className="flex flex-row gap-2 mb-8">
-                            <h2 id="asset-gallery" className="text-black dark:text-white text-2xl font-medium">
+                            <h2 id="asset-gallery" className="text-white text-2xl font-medium">
                                 Library
                             </h2>
                         </div>
