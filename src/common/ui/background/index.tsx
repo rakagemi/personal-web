@@ -123,7 +123,7 @@ export default function BackgroundSection({
             loading="eager"
             alt="Background"
             fill
-            priority={isDesktop}
+            priority
             sizes="100vw"
             className="object-cover object-top"
           />
