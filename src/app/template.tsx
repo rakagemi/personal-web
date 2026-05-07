@@ -9,12 +9,12 @@ const SplashScreen = dynamic(() => import("@/components/splash-screen"), { ssr: 
 const SESSION_KEY = "intro_played";
 
 /**
- * Deteksi bot (Lighthouse, Googlebot, crawler, dsb.)
+ * Deteksi bot (Lighthouse)
  * Dipanggil hanya di sisi client.
  */
 function isBot(): boolean {
   if (typeof navigator === "undefined") return true; // SSR → anggap bot
-  return /lighthouse|googlebot|bingbot|slurp|duckduckbot|baiduspider|yandexbot|facebot|ia_archiver|bot|crawl|spider/i.test(
+  return /lighthouse/i.test(
     navigator.userAgent
   );
 }

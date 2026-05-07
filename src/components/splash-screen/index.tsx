@@ -61,7 +61,7 @@ export default function SplashScreen({ onFinished, opacity, setOpacity }: Galaxy
 
       // === ANIMATION ===
       const startTime = Date.now();
-      const totalDuration = 2000;
+      const totalDuration = 1500;
       let finished = false;
       let lastOpacity = -1;
 
