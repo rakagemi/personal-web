@@ -3,12 +3,7 @@
 import { ContactFormContent } from "@/common/ui/contact/contact-form-content";
 import dynamic from "next/dynamic";
 
-const Loading = dynamic(() => import('@/components/loading'), {
-  ssr: false
-})
-
 const BackgroundSection = dynamic(() => import('@/common/ui/background'), {
-  loading: () => <Loading text="Loading..." />,
   ssr: false
 })
 
@@ -30,7 +25,7 @@ export default function ContactMainContent({ }) {
             <BackgroundSection
                 backgroundImageBlur={true}
                 opacity={"100"}
-                animationMode="initial-only"
+                animationMode="always"
             />
             <div className="fixed inset-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] from-blue-900/20 via-neutral-950 to-neutral-950 pointer-events-none z-0 transition-colors duration-300" />
             <main className="grow container mx-auto px-4 md:px-6 pt-20 pb-40 relative z-10 flex items-center justify-center" id="contact-me">

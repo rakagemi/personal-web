@@ -33,6 +33,7 @@ const config: Config = {
   },
 
   // Panggil plugin yang baru saja kita instal
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
 };
 
