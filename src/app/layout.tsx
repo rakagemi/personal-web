@@ -7,7 +7,6 @@ import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import NavigationBar from "@/components/navigation/liquid-navbar";
-import { LayoutAOD } from "@/components/layout-aod";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { CLIENT_ENV } from "@/utils/environment/client";
 

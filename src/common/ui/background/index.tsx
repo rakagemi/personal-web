@@ -32,16 +32,18 @@ export default function BackgroundSection({
     setMounted(true);
   }, []);
 
-  const themeReady = resolvedTheme === "dark" || resolvedTheme === "light";
-  const isDark = resolvedTheme === "dark";
+  // const themeReady = resolvedTheme === "dark" || resolvedTheme === "light";
+  // const isDark = resolvedTheme === "dark";
   const finalOpacity = Number(opacity) / 100;
 
-  const backgroundImageUrl = isDark
-    ? backgroundImage || "/assets/home/dark-bg-section.jpg"
-    : backgroundImage || "/assets/home/day-bg-section.jpg";
+  // const backgroundImageUrl = isDark
+  //   ? backgroundImage || "/assets/home/dark-bg-section.jpg"
+  //   : backgroundImage || "/assets/home/day-bg-section.jpg";
+
+    const backgroundImageUrl = backgroundImage || "/assets/home/dark-bg-section.jpg"
 
   useLayoutEffect(() => {
-  if (!mounted || !themeReady || !imageLayerRef.current) return;
+  if (!imageLayerRef.current) return;
 
   const el = imageLayerRef.current;
 
@@ -73,7 +75,7 @@ export default function BackgroundSection({
       clipPath: startClip,
       scale: 1.06,
       y: -24,
-      filter: isDark ? "brightness(0.9)" : "brightness(0.98)",
+      filter: "brightness(0.9)",
       transformOrigin: "center top",
     });
 
@@ -104,9 +106,9 @@ export default function BackgroundSection({
   }, imageLayerRef);
 
   return () => ctx.revert();
-}, [mounted, themeReady, isDark, backgroundImageUrl, animationMode]);
+}, [mounted, backgroundImageUrl, animationMode]);
 
-  if (!mounted || !themeReady) return null;
+  if (!mounted) return null;
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -124,6 +126,7 @@ export default function BackgroundSection({
             alt="Background"
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover object-top"
           />
@@ -131,9 +134,10 @@ export default function BackgroundSection({
   <div
     className={cn(
       "absolute inset-0 backdrop-blur-md z-10",  // Base: blur sedang
-      isDark
-        ? "bg-linear-to-b from-black/30 via-black/20 to-black/10"  // Gelap: black tint kuat
-        : "bg-linear-to-b from-white/20 via-white/10 to-transparent"  // Wider: white tint ringan
+      "bg-linear-to-b from-black/30 via-black/20 to-black/10"
+      // isDark
+      //   ? "bg-linear-to-b from-black/30 via-black/20 to-black/10"  // Gelap: black tint kuat
+      //   : "bg-linear-to-b from-white/20 via-white/10 to-transparent"  // Wider: white tint ringan
     )}
   />
 )}

@@ -21,6 +21,8 @@ import { cn } from "@/utils";
 import { CLIENT_ENV } from "@/utils/environment/client";
 import { useActiveLink } from "@/hooks/use-link-active";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { BREAKPOINTS } from "@/common/constants/media-query";
 
 type ThemeToggleButtonProps = {
     theme: string | undefined;
@@ -48,6 +50,7 @@ export default function NavigationBar() {
     const isMaintenance = CLIENT_ENV.maintenanceMode;
     const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const isDesktop = useMediaQuery(BREAKPOINTS.md);
     const [isShrunk, setIsShrunk] = useState(false);
     const router = useRouter();
     const constraintsRef = useRef<HTMLDivElement>(null);
@@ -120,7 +123,7 @@ export default function NavigationBar() {
                                 onClose={() => setIsMobileMenuOpen(false)}
                             >
                                 <div className="flex flex-row gap-3 items-center justify-end">
-                                    <Tooltip.Provider delayDuration={0}>
+                                    <Tooltip.Provider delayDuration={200}>
                                         {NAV_ITEMS.map((item, index) => {
                                             const Icon = item.icon;
                                             return (
@@ -135,28 +138,30 @@ export default function NavigationBar() {
                                                         ease: "easeOut",
                                                     }}
                                                 >
-                                                    <Tooltip.Root>
+                                                    <Tooltip.Root
+                                                    >
                                                         <Tooltip.Trigger asChild>
                                                             <span className="inline-block">
-                                                            <LGIcon
-                                                                className={cn(
-                                                                    "transition-colors duration-500",
-                                                                    item.mobile_hover_background_color,
-                                                                    item.mobile_hover_border_color,
-                                                                    isActive(item.link) && item.mobile_background_color_active,
-                                                                    isActive(item.link) && item.mobile_border_color_active,
-                                                                    isActive(item.link) && "shadow-none! border-none!",
-                                                                )}
-                                                                href={item.link}
-                                                            >
-                                                                <Icon
+                                                                <LGIcon
                                                                     className={cn(
-                                                                        "text-white",
-                                                                        isActive(item.link) && "text-white! transition-colors duration-300",
+                                                                        "transition-colors duration-500 flex-col lg:flex-row",
+                                                                        item.mobile_hover_background_color,
+                                                                        item.mobile_hover_border_color,
+                                                                        isActive(item.link) && item.mobile_background_color_active,
+                                                                        isActive(item.link) && item.mobile_border_color_active,
+                                                                        isActive(item.link) && "shadow-none! border-none!",
                                                                     )}
-                                                                    size={20}
-                                                                />
-                                                            </LGIcon>
+                                                                    href={item.link}
+                                                                >
+                                                                    <Icon
+                                                                        className={cn(
+                                                                            "text-white",
+                                                                            isActive(item.link) && "text-white! transition-colors duration-300",
+                                                                        )}
+                                                                        size={isDesktop ? 20 : 15}
+                                                                    />
+                                                                    <span className="md:hidden block text-[8px]">{item.name}</span>
+                                                                </LGIcon>
                                                             </span>
                                                         </Tooltip.Trigger>
                                                         <Tooltip.Portal>
