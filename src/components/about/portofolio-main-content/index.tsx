@@ -111,7 +111,7 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
                             <AccordionItem
                                 value="key-responsibilities"
                             >
-                                <AccordionTrigger>
+                                <AccordionTrigger className="text-white! dark:text-white!">
                                     Key Responsibilities
                                 </AccordionTrigger>
 
@@ -125,8 +125,8 @@ export function PortofolioMainContent({ company }: { company: PortfolioCompany }
                                     <KeyReponsiblityScrollHighLight
                                         type="list"
                                         items={company.key_responsibilities}
-                                        initialColor={'text-black/70'}
-                                        finalColor={'text-white/70'}
+                                        initialColor={'text-black/70!'}
+                                        finalColor={'text-white/70!'}
                                         className="text-sm md:text-base"
                                         stagger={0.3}
                                     />

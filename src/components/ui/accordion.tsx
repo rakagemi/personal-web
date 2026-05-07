@@ -37,7 +37,7 @@ const AccordionTrigger = React.forwardRef<
     >
       <div className="flex items-center gap-1">
         {/* Icon kiri: muncul hanya saat open */}
-        <span className="text-2xl font-medium text-black dark:text-white">{children}</span>
+        <span className="text-2xl font-medium text-white dark:text-white">{children}</span>
         <span className="flex h-6 w-6 items-center justify-center text-white/50 transition-all duration-300 group-data-[state=open]:opacity-100 group-data-[state=open]:scale-100 group-data-[state=closed]:opacity-0 group-data-[state=closed]:scale-75">
           <ChevronRight size={24} className="translate-x-1px font-medium" />
         </span>
