@@ -10,13 +10,16 @@ import DockMotion from "@/common/ui/dock-motion";
 import dynamic from "next/dynamic";
 
 const BackgroundSection = dynamic(() => import('@/common/ui/background'), {
-  ssr: false,
+    ssr: false,
 });
 const IntroductionSection = dynamic(() => import('@/components/home/introduction-content'), {
-  ssr: false,
+    ssr: false,
+})
+const NewsContent = dynamic(() => import('@/components/home/news-content'), {
+    ssr: false,
 })
 const FooterSection = dynamic(() => import('@/common/ui/footer'), {
-  ssr: false,
+    ssr: false,
 });
 
 export default function HomeMainContent() {
@@ -40,7 +43,7 @@ export default function HomeMainContent() {
                     animationMode="always"
                 />
                 <section className="relative w-full min-h-screen overflow-hidden flex items-center">
-                    <div className="relative z-10 container mx-auto px-6 md:px-10 pt-30 md:pt-20 pb-40 max-w-7xl w-full">
+                    <div className="relative z-10 container mx-auto px-6 pb-20 md:px-10 pt-30 md:pt-20 max-w-7xl w-full">
                         <LiquidGlassCard glass={"thin"} animated={true} spotlight={"soft"} entranceDelay={0.5}>
                             <div className="lg:p-8 p-2 flex flex-col gap-6">
                                 <motion.div
@@ -86,6 +89,9 @@ export default function HomeMainContent() {
                 </section>
                 <FooterSection />
             </main>
+            <section className="bg-[#0e100f] relative w-full h-full">
+                <NewsContent />
+            </section>
         </div>
     );
 }
