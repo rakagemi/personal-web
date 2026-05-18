@@ -295,6 +295,17 @@ export const portfolioCompanies: PortfolioCompany[] = [
         tags: ["Python", "Flask", "Deep Learning", "Machine Learning", "NLP", "TensorFlow", "Keras", "Long-Short Term Memory"],
         url: "https://github.com/rakagemi/IDENTIFYING-HOAX-NEWS"
       },
+      {
+        id: "76ee7ed2-06c3-4ae8-ac7a-70a278e62e91",
+        company_id:"raak-fun-1",
+        company_name:"Fun Project",
+        src: "/assets/freelance/freelance-webapp-job-portal-with-nuxt.png",
+        alt: "Job Portal (19 Juta Lapangan Pekerjaan)",
+        title: "Job Portal (19 Juta Lapangan Pekerjaan)",
+        description: "Job Portal (19 Juta Lapangan Pekerjaan). Make with Nuxt.js, Pinia, Tailwind CSS, Nuxt UI, Vue Motion and deployed on Vercel. This project is a job portal website that provides access to 19 million job opportunities across Indonesia, connecting job seekers with employers and facilitating career growth.",
+        tags: ["Typescript", "Vite", "Nuxt.js", "Vue.js", "Nuxt UI", "Pinia", "Tailwind CSS", "Vercel", "Web Application"],
+        url: "https://job-portal-pi-two.vercel.app/"
+      },
     ],
   }
 ];
