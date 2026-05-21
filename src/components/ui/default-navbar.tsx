@@ -1,6 +1,5 @@
 "use client";
 import { cn } from "@/utils";
-import { IconX } from "@tabler/icons-react";
 import {
   motion,
   AnimatePresence,
@@ -11,7 +10,7 @@ import Image from "next/image";
 import { GrContact } from "react-icons/gr";
 import { BsCollectionFill } from "react-icons/bs";
 import { LuWallpaper } from "react-icons/lu";
-import { ListIndentDecrease } from "lucide-react";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -273,36 +272,49 @@ export const MobileNavToggle = ({
       <div className="w-5 h-5 bg-white rounded-full z-10 shadow-[0_0_8px_2px_rgba(255,255,255,0.4)]" />
     </div>
   ) : (
-    <div onClick={onClick} className="gw-btn-icon relative overflow-hidden rounded-full bg-black/25 hover:bg-black/45 flex items-center justify-center border border-white/20 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95">
-      {/* Ring luar — gelap */}
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle, transparent 47%, rgba(20,22,28,0.65) 52%, rgba(15,17,22,0.55) 100%)",
-        }}
-      />
+    <Tooltip.Provider delayDuration={200}>
+      <Tooltip.Root>
+        <Tooltip.Trigger asChild>
+          <div onClick={onClick} className="gw-btn-icon relative overflow-hidden rounded-full bg-black/25 hover:bg-black/45 flex items-center justify-center border border-white/20 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95">
+            {/* Ring luar — gelap */}
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, transparent 47%, rgba(20,22,28,0.65) 52%, rgba(15,17,22,0.55) 100%)",
+              }}
+            />
 
-      {/* Ring dalam — abu-abu terang dengan gradasi ke tengah */}
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle, transparent 34%, rgba(180,183,188,0.55) 38%, rgba(110,113,118,0.45) 48%, transparent 52%)",
-        }}
-      />
+            {/* Ring dalam — abu-abu terang dengan gradasi ke tengah */}
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, transparent 34%, rgba(180,183,188,0.55) 38%, rgba(110,113,118,0.45) 48%, transparent 52%)",
+              }}
+            />
 
-      {/* Highlight tipis di bagian atas ring (efek cahaya) */}
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 20%, rgba(255,255,255,0.12) 0%, transparent 60%)",
-        }}
-      />
-      {/* Circle tengah */}
-      <div className="w-5 h-5 bg-white rounded-full z-10 shadow-[0_0_8px_2px_rgba(255,255,255,0.4)]" />
-    </div>
+            {/* Highlight tipis di bagian atas ring (efek cahaya) */}
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(ellipse at 50% 20%, rgba(255,255,255,0.12) 0%, transparent 60%)",
+              }}
+            />
+            {/* Circle tengah */}
+            <div className="w-5 h-5 bg-white rounded-full z-10 shadow-[0_0_8px_2px_rgba(255,255,255,0.4)]" />
+          </div>
+        </Tooltip.Trigger>
+        <Tooltip.Content
+          side="top"
+          sideOffset={5}
+          className="z-50 rounded-xl border border-white/15 bg-neutral-900/90 px-3 py-1.5 text-xs font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-md"
+        >
+          <p>Navigation</p>
+        </Tooltip.Content>
+      </Tooltip.Root>
+    </Tooltip.Provider>
   );
 };
 
@@ -313,7 +325,7 @@ export const NavbarLogo = ({ theme }: { theme: string }) => {
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black dark:text-white"
     >
       <Image
-      priority
+        priority
         src={"/favicon.svg"}
         width={30}
         height={30}

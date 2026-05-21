@@ -68,7 +68,7 @@ export default function HorizontalScrollSection() {
         className="sticky top-0 h-screen w-full overflow-hidden flex items-center"
       >
         {/* Shared dark background */}
-        <div className="absolute inset-0 bg-[#0e100f]" />
+        <div className="absolute inset-0" />
 
         {/* ── TITLE panel ──────────────────────────────────────────────── */}
         <div
@@ -99,7 +99,7 @@ export default function HorizontalScrollSection() {
               </p>
 
               {/* Scroll hint */}
-              <div className="mt-10 flex items-center gap-2 text-white/40 text-xs">
+              <div className="mt-10 flex items-center gap-2 text-highlight text-xs">
                 <svg
                   className="w-4 h-4 animate-bounce"
                   fill="none"
