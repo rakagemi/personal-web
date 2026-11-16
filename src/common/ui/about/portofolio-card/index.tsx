@@ -49,7 +49,7 @@ export function PortfolioCard({ company }: { company: PortfolioCompany }) {
           damping: 26,
           mass: 0.7,
         }}
-        className="gw-card group h-full overflow-hidden border border-white/10"
+        className="gw-card group h-full overflow-hidden border border-white/10 bg-neutral-900/80 backdrop-blur-sm md:backdrop-blur-md"
       >
         <Link
           href={`/about/${company.slug}`}
@@ -61,14 +61,12 @@ export function PortfolioCard({ company }: { company: PortfolioCompany }) {
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="relative flex flex-row items-center gap-2 mb-4">
-                    <div className="relative z-20 h-10 w-10 overflow-hidden rounded-xl shadow-lg border-white/10 bg-white/5 p-2 backdrop-blur-md">
+                    <div className="relative z-20 h-10 w-10 overflow-hidden rounded-xl shadow-lg border-white/10 bg-white/5 p-2 backdrop-blur-sm md:backdrop-blur-md">
                       <Image
-                        priority
                         src={getCompanyImage}
                         alt="Company Logo"
                         fill
-                        loading="eager"
-                        sizes="100svh"
+                        sizes="40px"
                         className="object-cover"
                       />
                     </div>
@@ -82,7 +80,7 @@ export function PortfolioCard({ company }: { company: PortfolioCompany }) {
                   </p>
                 </div>
 
-                <span className="contact-badge gw-btn mb-4 inline-table sm:inline-flex items-start sm:items-center rounded-full border border-blue-500/30 bg-white-500/10 sm:px-3 py-1 text-[11px] sm:text-sm font-medium text-blue-200 backdrop-blur-xl transition-colors">
+                <span className="contact-badge gw-btn mb-4 inline-table sm:inline-flex items-start sm:items-center rounded-full border border-blue-500/30 bg-white-500/10 sm:px-3 py-1 text-[11px] sm:text-sm font-medium text-blue-200 backdrop-blur-sm md:backdrop-blur-md transition-colors">
                   Open
                 </span>
               </div>
@@ -103,12 +101,11 @@ export function PortfolioCard({ company }: { company: PortfolioCompany }) {
                       className="aspect-4/3 overflow-hidden rounded-lg bg-white/5"
                     >
                       <Image
-                        loading="eager"
-                        priority
                         src={getAssetImage}
                         alt={asset.alt}
                         width={400}
                         height={300}
+                        sizes="(max-width: 768px) 33vw, 250px"
                         className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
                       />
                     </figure>

@@ -7,6 +7,7 @@ type Theme = "light" | "dark";
 interface ArchitectBackgroundProps {
     theme?: Theme;
     className?: string;
+    transparentBg?: boolean;
 }
 
 // ─── Theming (grid & bg only) ─────────────────────────────────────────────────
@@ -140,9 +141,11 @@ function drawShape(
         case "hexagon":
             for (let i = 0; i < 6; i++) {
                 const a = (Math.PI / 3) * i;
-                i === 0
-                    ? ctx.moveTo(Math.cos(a) * s, Math.sin(a) * s)
-                    : ctx.lineTo(Math.cos(a) * s, Math.sin(a) * s);
+                if (i === 0) {
+                    ctx.moveTo(Math.cos(a) * s, Math.sin(a) * s);
+                } else {
+                    ctx.lineTo(Math.cos(a) * s, Math.sin(a) * s);
+                }
             }
             ctx.closePath();
             ctx.fill();
@@ -271,10 +274,13 @@ function drawGrid(
 export default function ArchitectBackground({
     theme = "light",
     className = "",
+    transparentBg = false,
 }: ArchitectBackgroundProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const rafRef = useRef<number | null>(null);
     const stateRef = useRef<{ particles: Particle[] }>({ particles: [] });
+    const offscreenRef = useRef<HTMLCanvasElement | null>(null);
+    const isVisibleRef = useRef<boolean>(true);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -288,13 +294,35 @@ export default function ArchitectBackground({
         let W = 0;
         let H = 0;
 
+        function updateOffscreenGrid(w: number, h: number, dpr: number) {
+            if (w <= 0 || h <= 0) return;
+            const offscreen = document.createElement("canvas");
+            offscreen.width = w * dpr;
+            offscreen.height = h * dpr;
+            const offCtx = offscreen.getContext("2d");
+            if (!offCtx) return;
+
+            offCtx.scale(dpr, dpr);
+            const t = THEMES[theme];
+            if (!transparentBg) {
+                offCtx.fillStyle = t.bg;
+                offCtx.fillRect(0, 0, w, h);
+            }
+            drawGrid(offCtx, w, h, t);
+            offscreenRef.current = offscreen;
+        }
+
         function resize() {
             W = canvas!.offsetWidth;
             H = canvas!.offsetHeight;
-            const dpr = window.devicePixelRatio || 1;
+            if (W <= 0 || H <= 0) return;
+
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
             canvas!.width = W * dpr;
             canvas!.height = H * dpr;
             ctx!.scale(dpr, dpr);
+
+            updateOffscreenGrid(W, H, dpr);
 
             if (stateRef.current.particles.length === 0) {
                 stateRef.current.particles = Array.from({ length: PARTICLE_COUNT }, () =>
@@ -304,14 +332,23 @@ export default function ArchitectBackground({
         }
 
         function tick() {
-            const t = THEMES[theme];
+            if (!isVisibleRef.current || document.hidden) {
+                rafRef.current = null;
+                return;
+            }
+
             ctx!.clearRect(0, 0, W, H);
 
-            ctx!.fillStyle = t.bg;
-            ctx!.fillRect(0, 0, W, H);
+            // 1. Gambar grid statis dari offscreen canvas (1 draw call, bukan ribuan arc/fill per frame)
+            if (offscreenRef.current) {
+                ctx!.drawImage(offscreenRef.current, 0, 0, W, H);
+            } else if (!transparentBg) {
+                const t = THEMES[theme];
+                ctx!.fillStyle = t.bg;
+                ctx!.fillRect(0, 0, W, H);
+            }
 
-            drawGrid(ctx!, W, H, t);
-
+            // 2. Gambar partikel dinamis
             const particles = stateRef.current.particles;
             for (const p of particles) {
                 const color = PARTICLE_COLORS[p.colorIndex];
@@ -344,15 +381,56 @@ export default function ArchitectBackground({
             rafRef.current = requestAnimationFrame(tick);
         }
 
+        function startAnimation() {
+            if (rafRef.current === null && isVisibleRef.current && !document.hidden) {
+                rafRef.current = requestAnimationFrame(tick);
+            }
+        }
+
+        function stopAnimation() {
+            if (rafRef.current !== null) {
+                cancelAnimationFrame(rafRef.current);
+                rafRef.current = null;
+            }
+        }
+
         resize();
         window.addEventListener("resize", resize);
-        rafRef.current = requestAnimationFrame(tick);
+
+        // Visibility API: pause jika tab diminimize / berpindah tab
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                stopAnimation();
+            } else {
+                startAnimation();
+            }
+        };
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        // IntersectionObserver: pause jika canvas berada di luar viewport
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                isVisibleRef.current = entry.isIntersecting;
+                if (entry.isIntersecting) {
+                    startAnimation();
+                } else {
+                    stopAnimation();
+                }
+            },
+            { threshold: 0.05 }
+        );
+        observer.observe(canvas);
+
+        startAnimation();
 
         return () => {
-            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+            stopAnimation();
+            observer.disconnect();
             window.removeEventListener("resize", resize);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+            offscreenRef.current = null;
         };
-    }, [theme]);
+    }, [theme, transparentBg]);
 
     return (
         <canvas
@@ -365,6 +443,7 @@ export default function ArchitectBackground({
                 height: "100%",
                 position: "absolute",
                 inset: 0,
+                pointerEvents: "none",
             }}
         />
     );

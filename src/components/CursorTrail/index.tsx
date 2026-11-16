@@ -4,12 +4,19 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { FLAIRS_IMAGES } from "@/common/constants/flair-images-cursor";
+import { useIsMobile } from "@/hooks/use-detect-mobile";
 
 export default function CursorTrail() {
+    const isMobile = useIsMobile();
     const wrapperRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
+        // Jangan inisialisasi di mobile atau jika isMobile belum terkonfirmasi false
+        if (isMobile !== false) return;
+
         const flair = wrapperRefs.current.filter(Boolean) as HTMLDivElement[];
+        if (!flair.length) return;
+
         const gap = 100;
         let index = 0;
         const wrapper = gsap.utils.wrap(0, flair.length);
@@ -24,6 +31,8 @@ export default function CursorTrail() {
         let mousePos = { x: 0, y: 0 };
         let lastMousePos = { x: 0, y: 0 };
         const cachedMousePos = { x: 0, y: 0 };
+        let isTickerActive = false;
+        let idleTimer: ReturnType<typeof setTimeout> | null = null;
 
         function playAnimation(shape: HTMLDivElement) {
             const tl = gsap.timeline();
@@ -54,8 +63,28 @@ export default function CursorTrail() {
             index++;
         }
 
+        function stopTicker() {
+            if (isTickerActive) {
+                gsap.ticker.remove(imageTrail);
+                isTickerActive = false;
+            }
+        }
+
+        function startTicker() {
+            if (!isTickerActive) {
+                gsap.ticker.add(imageTrail);
+                isTickerActive = true;
+            }
+            if (idleTimer) clearTimeout(idleTimer);
+            // Auto-sleep jika mouse berhenti selama 500ms
+            idleTimer = setTimeout(() => {
+                stopTicker();
+            }, 500);
+        }
+
         function onMouseMove(e: MouseEvent) {
             mousePos = { x: e.clientX, y: e.clientY };
+            startTicker();
         }
 
         function imageTrail() {
@@ -82,13 +111,18 @@ export default function CursorTrail() {
         }
 
         window.addEventListener("mousemove", onMouseMove);
-        gsap.ticker.add(imageTrail);
 
         return () => {
             window.removeEventListener("mousemove", onMouseMove);
-            gsap.ticker.remove(imageTrail);
+            if (idleTimer) clearTimeout(idleTimer);
+            stopTicker();
         };
-    }, []);
+    }, [isMobile]);
+
+    // Di mobile atau saat SSR (isMobile !== false), jangan render elemen DOM apapun
+    if (isMobile !== false) {
+        return null;
+    }
 
     return (
         <div
@@ -118,7 +152,7 @@ export default function CursorTrail() {
                     <Image
                         src={src}
                         alt="cursor"
-                        loading="eager"
+                        loading="lazy"
                         width={60}
                         height={60}
                         unoptimized
