@@ -2,7 +2,8 @@
 
 import { useIsMobile } from "@/hooks/use-detect-mobile";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Mesh, PlaneGeometry, ShaderMaterial, Texture } from "three";
+import * as THREE from "three";
+import type { Mesh, PlaneGeometry, ShaderMaterial, Texture } from "three";
 
 interface ParallaxImageProps {
   imageUrl: string;
@@ -16,8 +17,6 @@ interface ParallaxImageProps {
 }
 
 type GyroStatus = "idle" | "pending" | "granted" | "denied" | "unsupported";
-
-const THREE = await import('three')
 
 export default function ParallaxImage({
   imageUrl,
@@ -169,6 +168,7 @@ export default function ParallaxImage({
     let geometry: PlaneGeometry | null = null;
     let texture: Texture | null = null;
     let raf = 0;
+    let isIntersecting = true;
 
     const targetMouse = new THREE.Vector2(0, 0);
     const currentMouse = new THREE.Vector2(0, 0);
@@ -204,7 +204,25 @@ export default function ParallaxImage({
       }
     };
 
+    const startAnimation = () => {
+      if (raf === 0 && isIntersecting && !document.hidden) {
+        raf = requestAnimationFrame(animate);
+      }
+    };
+
+    const stopAnimation = () => {
+      if (raf !== 0) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    };
+
     const animate = () => {
+      if (!isIntersecting || document.hidden) {
+        raf = 0;
+        return;
+      }
+
       raf = requestAnimationFrame(animate);
 
       if (gyroEnabledRef.current) {
@@ -298,10 +316,10 @@ export default function ParallaxImage({
         geometry = new THREE.PlaneGeometry(2 * (w / h), 2, 32, 32);
         mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
-        animate();
+        startAnimation();
       },
       undefined,
-      () => animate()
+      () => startAnimation()
     );
 
     mount.addEventListener("mousemove", onMove);
@@ -309,8 +327,34 @@ export default function ParallaxImage({
     window.addEventListener("resize", resize);
     resize();
 
+    // Visibility API: pause jika tab diminimize / berpindah tab
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAnimation();
+      } else {
+        startAnimation();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // IntersectionObserver: pause jika Hero panel ter-scroll keluar layar
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(mount);
+
     return () => {
-      cancelAnimationFrame(raf);
+      stopAnimation();
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       mount.removeEventListener("mousemove", onMove);
       mount.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("resize", resize);

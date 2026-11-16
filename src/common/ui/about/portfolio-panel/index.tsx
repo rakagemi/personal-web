@@ -10,6 +10,7 @@ import { portfolioCompanies } from "@/common/json/portofolio";
 import { Sparkles } from "lucide-react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useIsMobile } from "@/hooks/use-detect-mobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,6 +33,7 @@ const PanelPortfolioBackgroundSection = dynamic(() => import('@/common/ui/archit
 })
 
 export default function PanelPortfolio() {
+    const isMobile = useIsMobile();
     const containerRef = useRef<HTMLDivElement>(null);
 
     useGSAP(
@@ -101,7 +103,7 @@ export default function PanelPortfolio() {
                                 gyroSmoothing={0.15}
                                 debug={false}
                             />
-                            <PanelCursorTrail />
+                            {!isMobile && <PanelCursorTrail />}
                             <motion.div
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
@@ -141,7 +143,7 @@ export default function PanelPortfolio() {
                       relative z-10 overflow-hidden rounded-2xl w-18 h-18
                       bg-neutral-700/40
                       shadow-[0_12px_40px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.08)]
-                      backdrop-blur-2xl backdrop-saturate-150"
+                      backdrop-blur-md"
                                 >
                                     <Image src="/assets/image/unnamed.jpg" priority loading="eager" className="object-cover" width={80} height={80} alt="logo" />
                                 </div>
